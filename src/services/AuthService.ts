@@ -1,7 +1,8 @@
 import { IAuthService, UserLoginData } from "@/models/Auth";
 
 export class AuthService implements IAuthService {
-  async loginUser({ login, password }: UserLoginData): Promise<string> {
-    return login + password;
+  async loginUser({ email, password }: UserLoginData): Promise<string> {
+    await fetch("https://httpbin.org/get");
+    return email + password;
   }
 }

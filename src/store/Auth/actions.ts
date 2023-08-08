@@ -7,6 +7,6 @@ export const fetchAuthToken = createAsyncThunk<
   string | null,
   UserLoginData,
   AppThunkApiConfig
->("authLoginUser", async ({ login, password }, { extra }) =>
-  extra.authService.loginUser({ login, password }),
+>("authLoginUser", async ({ email, password }, { extra }) =>
+  extra.authService.loginUser({ email, password }),
 );

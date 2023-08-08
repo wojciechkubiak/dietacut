@@ -9,7 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { fetchAuthToken } from "@/store/Auth/actions";
 import { changeEmail, changePassword } from "@/store/Auth/slice";
-import { event } from "next/dist/build/output/log";
+import { AiOutlineArrowRight } from "react-icons/ai";
 
 const Login: FC = () => {
   const dispatch = useAppDispatch();
@@ -55,16 +55,21 @@ const Login: FC = () => {
       <button
         type="submit"
         className={`border-4 h-32 w-32 border-emerald-300 rounded-full shadow-2xl hover:scale-110 duration-200 flex items-center justify-center`}
+        disabled={isLoading}
       >
-        <ColorRing
-          visible={true}
-          height="128"
-          width="128"
-          ariaLabel="blocks-loading"
-          wrapperStyle={{}}
-          wrapperClass="blocks-wrapper"
-          colors={["#d1fae5", "#a7f3d0", "#6ee7b7", "#34d399", "#10b981"]}
-        />
+        {!isLoading ? (
+          <AiOutlineArrowRight className="text-5xl text-emerald-500" />
+        ) : (
+          <ColorRing
+            visible={true}
+            height="128"
+            width="128"
+            ariaLabel="blocks-loading"
+            wrapperStyle={{}}
+            wrapperClass="blocks-wrapper"
+            colors={["#d1fae5", "#a7f3d0", "#6ee7b7", "#34d399", "#10b981"]}
+          />
+        )}
       </button>
     </form>
   );
