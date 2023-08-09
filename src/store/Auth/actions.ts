@@ -1,12 +1,43 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { AppThunkApiConfig } from "../store";
-import { UserLoginData } from "@/models/Auth";
+import { TokenData, UserLoginData, UserRegisterData } from "@/models/Auth";
 
-export const fetchAuthToken = createAsyncThunk<
-  string | null,
+export const loginUser = createAsyncThunk<
+  TokenData,
   UserLoginData,
   AppThunkApiConfig
 >("authLoginUser", async ({ email, password }, { extra }) =>
   extra.authService.loginUser({ email, password }),
+);
+
+export const registerUser = createAsyncThunk<
+  TokenData,
+  UserRegisterData,
+  AppThunkApiConfig
+>(
+  "authLoginUser",
+  async (
+    {
+      email,
+      password,
+      weight,
+      targetWeight,
+      height,
+      birthday,
+      bodyType,
+      proportions,
+    },
+    { extra },
+  ) =>
+    extra.authService.registerUser({
+      email,
+      password,
+      weight,
+      targetWeight,
+      height,
+      birthday,
+      bodyType,
+      proportions,
+    }),
 );

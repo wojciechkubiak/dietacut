@@ -1,10 +1,52 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { fetchAuthToken } from "@/store/Auth/actions";
+import { loginUser, registerUser } from "@/store/Auth/actions";
+import {
+  AuthStatus,
+  BodyType,
+  Proportions,
+  TokenData,
+  UserLoginData,
+  UserRegisterData,
+} from "@/models/Auth";
 
-const initialState = {
+interface InitialState {
+  auth: TokenData;
+  login: UserLoginData;
+  register: UserRegisterData;
+  error: string;
+  isLoading: boolean;
+}
+
+const initialAuthData = {
+  token: "",
+  refreshToken: "",
+  authStatus: AuthStatus.CHECKING,
+};
+
+const initialLoginData = {
   email: "",
   password: "",
-  token: "",
+};
+
+const initialRegisterData = {
+  email: "",
+  password: "",
+  weight: 85,
+  targetWeight: 79,
+  height: 175,
+  birthday: new Date(),
+  bodyType: BodyType.ECTOMORPH,
+  proportions: {
+    fat: 20,
+    carbs: 50,
+    proteins: 30,
+  },
+};
+
+const initialState: InitialState = {
+  auth: initialAuthData,
+  login: initialLoginData,
+  register: initialRegisterData,
   error: "",
   isLoading: false,
 };
@@ -13,28 +55,37 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    changeEmail(state, action: PayloadAction<string>) {
-      state.email = action.payload;
+    changeAuthData(state, action: PayloadAction<Partial<TokenData>>) {
+      state.auth = { ...state.auth, ...action.payload };
     },
-    changePassword(state, action: PayloadAction<string>) {
-      state.password = action.payload;
+    changeLoginData(state, action: PayloadAction<Partial<UserLoginData>>) {
+      state.login = { ...state.login, ...action.payload };
+    },
+    changeRegisterData(
+      state,
+      action: PayloadAction<Partial<UserRegisterData>>,
+    ) {
+      state.register = { ...state.register, ...action.payload };
+    },
+    resetData(state) {
+      state = initialState;
     },
   },
   extraReducers: ({ addCase }) => {
-    addCase(fetchAuthToken.pending, (state, action) => {
+    addCase(loginUser.pending, (state, action) => {
       state.isLoading = true;
     });
-    addCase(fetchAuthToken.fulfilled, (state, { payload }) => {
+    addCase(loginUser.fulfilled, (state, { payload }) => {
       state.isLoading = false;
       state.error = "";
 
       if (payload && typeof payload !== "string") {
-        state.token = payload;
+        state.auth = payload;
       } else if (payload === "string") {
         state.error = payload;
       }
     });
-    addCase(fetchAuthToken.rejected, (state, result) => {
+    addCase(loginUser.rejected, (state, result) => {
       state.isLoading = false;
       if (result.error.message) {
         state.error = result.error.message;
@@ -43,5 +94,10 @@ const authSlice = createSlice({
   },
 });
 
-export const { changeEmail, changePassword } = authSlice.actions;
+export const {
+  changeAuthData,
+  changeLoginData,
+  changeRegisterData,
+  resetData,
+} = authSlice.actions;
 export const authReducer = authSlice.reducer;
