@@ -31,9 +31,9 @@ export interface UserRegisterData extends UserLoginData {
   weight: number;
   targetWeight: number;
   height: number;
-  birthday: Date;
   bodyType: BodyType;
   proportions: Proportions;
+  birthday?: Date;
 }
 
 export interface IAuthService {
