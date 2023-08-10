@@ -11,33 +11,10 @@ export const loginUser = createAsyncThunk<
   extra.authService.loginUser({ email, password }),
 );
 
-// export const registerUser = createAsyncThunk<
-//   TokenData,
-//   UserRegisterData,
-//   AppThunkApiConfig
-// >(
-//   "authLoginUser",
-//   async (
-//     {
-//       email,
-//       password,
-//       weight,
-//       targetWeight,
-//       height,
-//       birthday,
-//       bodyType,
-//       proportions,
-//     },
-//     { extra },
-//   ) =>
-//     extra.authService.registerUser({
-//       email,
-//       password,
-//       weight,
-//       targetWeight,
-//       height,
-//       birthday,
-//       bodyType,
-//       proportions,
-//     }),
-// );
+export const registerUser = createAsyncThunk<
+  TokenData,
+  UserRegisterData,
+  AppThunkApiConfig
+>("authLoginUser", async (userRegisterData, { extra }) =>
+  extra.authService.registerUser(userRegisterData),
+);

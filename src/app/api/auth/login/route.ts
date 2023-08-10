@@ -4,9 +4,13 @@ import { NextResponse } from "next/server";
 export const POST = async (
   request: Request,
 ): Promise<NextResponse<TokenData | ErrorData>> => {
-  const { email, password }: UserLoginData = await request.json();
+  const loginData: UserLoginData = await request.json();
 
-  if (!password || !email)
+  const isDataMissing = Object.values(loginData).some(
+    (value) => !Boolean(value),
+  );
+
+  if (isDataMissing)
     return NextResponse.json({ error: "Missing required data" });
 
   return NextResponse.json({

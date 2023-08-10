@@ -49,6 +49,6 @@ export interface UserRegisterData extends UserLoginData {
 }
 
 export interface IAuthService {
-  loginUser: ({ email, password }: UserLoginData) => Promise<TokenData>;
-  // registerUser: ({ email, password }: UserRegisterData) => Promise<TokenData>;
+  loginUser: (userLoginData: UserLoginData) => Promise<TokenData>;
+  registerUser: (userRegisterData: UserRegisterData) => Promise<TokenData>;
 }

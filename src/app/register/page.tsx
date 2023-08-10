@@ -27,7 +27,7 @@ const Register: FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const {
-    auth: { authStatus },
+    authStatus,
     register: registerData,
     register: {
       email,
