@@ -39,6 +39,7 @@ const Register: FC = () => {
       reducedKcal,
       height,
       bodyType,
+      activity,
       proportions,
       proportions: { fat, proteins, carbs },
       birthday,

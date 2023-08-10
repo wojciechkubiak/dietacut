@@ -2,13 +2,11 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginUser } from "@/store/Auth/actions";
 import {
   AuthStatus,
-  BodyType,
-  Gender,
-  Proportions,
   TokenData,
   UserLoginData,
   UserRegisterData,
 } from "@/models/Auth";
+import { Activity, BodyType, Gender } from "@/models/User";
 
 interface InitialState {
   authStatus: AuthStatus;
@@ -40,6 +38,7 @@ const initialRegisterData = {
   reducedKcal: 500,
   height: 175,
   bodyType: BodyType.ECTOMORPH,
+  activity: Activity.MEDIUM,
   proportions: {
     fat: 20,
     carbs: 50,
@@ -90,6 +89,7 @@ const authSlice = createSlice({
       if (payload && typeof payload !== "string") {
         state.authStatus = AuthStatus.AUTHENTICATED;
         state.auth = payload;
+
         state.register = initialRegisterData;
         state.login = initialLoginData;
       } else if (payload === "string") {

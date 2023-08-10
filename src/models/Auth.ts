@@ -1,12 +1,9 @@
+import { Activity, BodyType, Gender, Proportions } from "@/models/User";
+
 export enum AuthStatus {
   CHECKING = "checking",
   NOT_AUTHENTICATED = "non_authenticated",
   AUTHENTICATED = "authenticated",
-}
-
-export enum Gender {
-  MALE = "m",
-  FEMALE = "f,",
 }
 
 export interface ErrorData {
@@ -24,18 +21,6 @@ export interface UserLoginData {
   password: string;
 }
 
-export enum BodyType {
-  ECTOMORPH = "ectomorph",
-  MESOMORPH = "mesomorph",
-  ENDOMORPH = "endomorph",
-}
-
-export interface Proportions {
-  fat: number;
-  carbs: number;
-  proteins: number;
-}
-
 export interface UserRegisterData extends UserLoginData {
   name: string;
   gender: Gender;
@@ -45,6 +30,7 @@ export interface UserRegisterData extends UserLoginData {
   height: number;
   bodyType: BodyType;
   proportions: Proportions;
+  activity: Activity;
   birthday: string;
 }
 
