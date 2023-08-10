@@ -9,10 +9,14 @@ export enum Gender {
   FEMALE = "f,",
 }
 
+export interface ErrorData {
+  error: string;
+}
+
 export interface TokenData {
   token: string;
   refreshToken: string;
-  authStatus: AuthStatus;
+  expirationTime: number;
 }
 
 export interface UserLoginData {
@@ -46,5 +50,5 @@ export interface UserRegisterData extends UserLoginData {
 
 export interface IAuthService {
   loginUser: ({ email, password }: UserLoginData) => Promise<TokenData>;
-  registerUser: ({ email, password }: UserRegisterData) => Promise<TokenData>;
+  // registerUser: ({ email, password }: UserRegisterData) => Promise<TokenData>;
 }

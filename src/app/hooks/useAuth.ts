@@ -13,7 +13,7 @@ interface UseAuth {
 const useAuth = (): UseAuth => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const authStatus = useAppSelector((state) => state.data.auth.authStatus);
+  const authStatus = useAppSelector((state) => state.data.authStatus);
 
   const userLogOut = () => {
     Cookies.remove("token");
@@ -34,9 +34,9 @@ const useAuth = (): UseAuth => {
       router.push("/login");
     } else if (isLoading) {
       if (isAuthData) {
-        dispatch(changeAuthData({ authStatus: AuthStatus.AUTHENTICATED }));
+        dispatch(changeAuthData(AuthStatus.AUTHENTICATED));
       } else {
-        dispatch(changeAuthData({ authStatus: AuthStatus.NOT_AUTHENTICATED }));
+        dispatch(changeAuthData(AuthStatus.NOT_AUTHENTICATED));
       }
     }
   }, [authStatus]);

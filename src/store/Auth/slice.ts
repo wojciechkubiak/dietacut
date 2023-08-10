@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { loginUser, registerUser } from "@/store/Auth/actions";
+import { loginUser } from "@/store/Auth/actions";
 import {
   AuthStatus,
   BodyType,
@@ -11,6 +11,7 @@ import {
 } from "@/models/Auth";
 
 interface InitialState {
+  authStatus: AuthStatus;
   auth: TokenData;
   login: UserLoginData;
   register: UserRegisterData;
@@ -21,7 +22,7 @@ interface InitialState {
 const initialAuthData = {
   token: "",
   refreshToken: "",
-  authStatus: AuthStatus.CHECKING,
+  expirationTime: 0,
 };
 
 const initialLoginData = {
@@ -48,6 +49,7 @@ const initialRegisterData = {
 };
 
 const initialState: InitialState = {
+  authStatus: AuthStatus.CHECKING,
   auth: initialAuthData,
   login: initialLoginData,
   register: initialRegisterData,
@@ -59,8 +61,8 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    changeAuthData(state, action: PayloadAction<Partial<TokenData>>) {
-      state.auth = { ...state.auth, ...action.payload };
+    changeAuthData(state, action: PayloadAction<AuthStatus>) {
+      state.authStatus = action.payload;
     },
     changeLoginData(state, action: PayloadAction<Partial<UserLoginData>>) {
       state.login = { ...state.login, ...action.payload };
@@ -74,10 +76,7 @@ const authSlice = createSlice({
     logOut(state) {
       state.register = initialRegisterData;
       state.login = initialLoginData;
-      state.auth = {
-        ...initialAuthData,
-        authStatus: AuthStatus.NOT_AUTHENTICATED,
-      };
+      state.authStatus = AuthStatus.NOT_AUTHENTICATED;
     },
   },
   extraReducers: ({ addCase }) => {
@@ -89,10 +88,12 @@ const authSlice = createSlice({
       state.error = "";
 
       if (payload && typeof payload !== "string") {
+        state.authStatus = AuthStatus.AUTHENTICATED;
         state.auth = payload;
         state.register = initialRegisterData;
         state.login = initialLoginData;
       } else if (payload === "string") {
+        state.authStatus = AuthStatus.NOT_AUTHENTICATED;
         state.error = payload;
       }
     });
