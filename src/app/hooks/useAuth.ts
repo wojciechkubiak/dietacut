@@ -3,12 +3,23 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { useEffect, useState } from "react";
 import { AuthStatus, TokenData } from "@/models/Auth";
 import Cookies from "js-cookie";
-import { changeAuthData } from "@/store/Auth/slice";
+import { changeAuthData, logOut } from "@/store/Auth/slice";
 
-const useAuth = (): AuthStatus => {
+interface UseAuth {
+  authStatus: AuthStatus;
+  userLogOut: () => void;
+}
+
+const useAuth = (): UseAuth => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const authStatus = useAppSelector((state) => state.data.auth.authStatus);
+
+  const userLogOut = () => {
+    Cookies.remove("token");
+    Cookies.remove("refreshToken");
+    dispatch(logOut());
+  };
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -30,7 +41,7 @@ const useAuth = (): AuthStatus => {
     }
   }, [authStatus]);
 
-  return authStatus;
+  return { authStatus, userLogOut };
 };
 
 export default useAuth;

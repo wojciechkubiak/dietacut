@@ -21,21 +21,26 @@ import { useRouter } from "next/navigation";
 import useAuth from "@/app/hooks/useAuth";
 import { AuthStatus } from "@/models/Auth";
 import BasicInput, { InputType } from "@/app/components/inputs/BasicInput";
+import AppHeader from "@/app/components/headers/AppHeader";
 
 const Register: FC = () => {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const {
     auth: { authStatus },
+    register: registerData,
     register: {
       email,
       password,
+      name,
+      gender,
       weight,
       targetWeight,
+      reducedKcal,
       height,
+      bodyType,
       proportions,
       proportions: { fat, proteins, carbs },
-      bodyType,
       birthday,
     },
     isLoading,
@@ -44,18 +49,7 @@ const Register: FC = () => {
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(
-      registerUser({
-        email,
-        password,
-        weight,
-        targetWeight,
-        height,
-        proportions,
-        bodyType,
-        birthday,
-      }),
-    );
+    dispatch(registerUser(registerData));
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) =>
@@ -72,18 +66,17 @@ const Register: FC = () => {
 
   return (
     <>
-      <FormHeader />
+      <AppHeader />
       <AnimatedOpacityWrapper>
-        <FormWrapper>
-          <button type="button" onClick={onBackButtonClick}>
-            <AiOutlineArrowLeft className="text-3xl text-gray-700" />
-          </button>
-          <h1 className="font-bold text-7xl text-gray-700 text-center">
-            Rejestracja
-          </h1>
-          <p className="text-md text-gray-600 text-center mt-2 mb-12">
-            Dane można edytować po założeniu konta
-          </p>
+        <FormWrapper externalClassName="pt-12 px-12 pb-6 mt-12">
+          <FormHeader
+            headerText="Rejestracja"
+            onBackButtonClick={onBackButtonClick}
+          >
+            <p className="text-md text-gray-600 text-center mt-2 mb-12">
+              Dane można edytować po założeniu konta
+            </p>
+          </FormHeader>
           <form
             onSubmit={onSubmit}
             className="flex flex-col justify-center items-center my-10 space-y-8"

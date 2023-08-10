@@ -14,9 +14,10 @@ import FormWrapper from "@/app/components/wrappers/FormWrapper";
 import BasicInput, { InputType } from "@/app/components/inputs/BasicInput";
 import { AiOutlineArrowRight } from "react-icons/ai";
 import { ColorRing } from "react-loader-spinner";
+import AppHeader from "@/app/components/headers/AppHeader";
 
 const Login: FC = () => {
-  const authStatus = useAuth();
+  const { authStatus } = useAuth();
   const dispatch = useAppDispatch();
   const router = useRouter();
   const {
@@ -59,21 +60,20 @@ const Login: FC = () => {
       )}
       {isLoginPage && (
         <>
-          <FormHeader />
+          <AppHeader />
           <AnimatedOpacityWrapper>
-            <FormWrapper>
-              <h1 className="font-bold text-7xl text-gray-700 text-center">
-                Zaloguj
-              </h1>
-              <p className="text-md text-gray-600 text-center mt-2 mb-12">
-                Nie masz konta?{" "}
-                <span
-                  onClick={navigateRegister}
-                  className="text-emerald-400 cursor-pointer"
-                >
-                  Stwórz!
-                </span>
-              </p>
+            <FormWrapper externalClassName="pt-12 px-12 pb-6 mt-12">
+              <FormHeader headerText="Zaloguj">
+                <p className="text-md text-gray-600 text-center mt-2 mb-12">
+                  Nie masz konta?{" "}
+                  <span
+                    onClick={navigateRegister}
+                    className="text-emerald-400 cursor-pointer"
+                  >
+                    Stwórz!
+                  </span>
+                </p>
+              </FormHeader>
               <form
                 onSubmit={onSubmit}
                 className="flex flex-col justify-center items-center my-10 space-y-8"

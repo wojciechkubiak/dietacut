@@ -1,11 +1,25 @@
-import { FC } from "react";
+import { FC, PropsWithChildren } from "react";
+import { AiOutlineArrowLeft } from "react-icons/ai";
 
-const FormHeader: FC = () => (
+interface FormHeaderProps {
+  headerText: string;
+  onBackButtonClick?: () => void;
+}
+const FormHeader: FC<PropsWithChildren<FormHeaderProps>> = ({
+  children,
+  headerText,
+  onBackButtonClick,
+}) => (
   <>
-    <h1 className="font-bold text-5xl text-white mt-8 text-center">DietaCut</h1>
-    <p className="text-center text-sm text-white mt-1">
-      Stworzona z FatSecret Platform API
-    </p>
+    {!!onBackButtonClick && (
+      <button type="button" onClick={onBackButtonClick}>
+        <AiOutlineArrowLeft className="text-3xl text-emerald-700" />
+      </button>
+    )}
+    <h1 className="font-bold text-7xl text-gray-700 text-center">
+      {headerText}
+    </h1>
+    {children}
   </>
 );
 

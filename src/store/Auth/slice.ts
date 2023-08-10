@@ -3,6 +3,7 @@ import { loginUser, registerUser } from "@/store/Auth/actions";
 import {
   AuthStatus,
   BodyType,
+  Gender,
   Proportions,
   TokenData,
   UserLoginData,
@@ -31,16 +32,19 @@ const initialLoginData = {
 const initialRegisterData = {
   email: "",
   password: "",
+  name: "",
+  gender: Gender.FEMALE,
   weight: 85,
   targetWeight: 79,
+  reducedKcal: 500,
   height: 175,
-  birthday: new Date(),
   bodyType: BodyType.ECTOMORPH,
   proportions: {
     fat: 20,
     carbs: 50,
     proteins: 30,
   },
+  birthday: new Date().toISOString(),
 };
 
 const initialState: InitialState = {
@@ -67,8 +71,13 @@ const authSlice = createSlice({
     ) {
       state.register = { ...state.register, ...action.payload };
     },
-    resetData(state) {
-      state = initialState;
+    logOut(state) {
+      state.register = initialRegisterData;
+      state.login = initialLoginData;
+      state.auth = {
+        ...initialAuthData,
+        authStatus: AuthStatus.NOT_AUTHENTICATED,
+      };
     },
   },
   extraReducers: ({ addCase }) => {
@@ -81,6 +90,8 @@ const authSlice = createSlice({
 
       if (payload && typeof payload !== "string") {
         state.auth = payload;
+        state.register = initialRegisterData;
+        state.login = initialLoginData;
       } else if (payload === "string") {
         state.error = payload;
       }
@@ -94,10 +105,6 @@ const authSlice = createSlice({
   },
 });
 
-export const {
-  changeAuthData,
-  changeLoginData,
-  changeRegisterData,
-  resetData,
-} = authSlice.actions;
+export const { changeAuthData, changeLoginData, changeRegisterData, logOut } =
+  authSlice.actions;
 export const authReducer = authSlice.reducer;

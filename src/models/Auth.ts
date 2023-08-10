@@ -4,6 +4,11 @@ export enum AuthStatus {
   AUTHENTICATED = "authenticated",
 }
 
+export enum Gender {
+  MALE = "m",
+  FEMALE = "f,",
+}
+
 export interface TokenData {
   token: string;
   refreshToken: string;
@@ -28,12 +33,15 @@ export interface Proportions {
 }
 
 export interface UserRegisterData extends UserLoginData {
+  name: string;
+  gender: Gender;
   weight: number;
   targetWeight: number;
+  reducedKcal: number;
   height: number;
   bodyType: BodyType;
   proportions: Proportions;
-  birthday?: Date;
+  birthday: string;
 }
 
 export interface IAuthService {
