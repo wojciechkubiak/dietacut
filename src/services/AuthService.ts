@@ -8,25 +8,21 @@ import {
   UserRegisterData,
 } from "@/models/Auth";
 import axios from "axios";
-
-const storeAuth = ({ token, refreshToken }: TokenData) => {
-  Cookies.set("token", token);
-  Cookies.set("refreshToken", refreshToken);
-};
+import { ApiResponse } from "@/models/ApiResponse";
 
 export class AuthService implements IAuthService {
-  async loginUser(userLoginData: UserLoginData): Promise<TokenData> {
+  async loginUser(
+    userLoginData: UserLoginData
+  ): Promise<ApiResponse<TokenData>> {
     return axios
       .post("/api/auth/login", userLoginData)
-      .then(function (response) {
-        return response;
-      })
-      .catch(function (error) {
-        return error;
-      });
+      .then((response) => response)
+      .catch((error) => error);
   }
 
-  async registerUser(userRegisterData: UserRegisterData): Promise<TokenData> {
+  async registerUser(
+    userRegisterData: UserRegisterData
+  ): Promise<ApiResponse<TokenData>> {
     return axios
       .post("/api/auth/register", userRegisterData)
       .then(function (response) {

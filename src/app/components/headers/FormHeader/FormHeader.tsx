@@ -5,6 +5,7 @@ interface FormHeaderProps {
   headerText: string;
   onBackButtonClick?: () => void;
 }
+
 const FormHeader: FC<PropsWithChildren<FormHeaderProps>> = ({
   children,
   headerText,
@@ -12,7 +13,7 @@ const FormHeader: FC<PropsWithChildren<FormHeaderProps>> = ({
 }) => (
   <>
     {!!onBackButtonClick && (
-      <button type="button" onClick={onBackButtonClick}>
+      <button title="form-header-btn" type="button" onClick={onBackButtonClick}>
         <AiOutlineArrowLeft className="text-3xl text-emerald-700" />
       </button>
     )}

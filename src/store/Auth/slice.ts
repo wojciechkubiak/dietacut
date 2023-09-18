@@ -68,7 +68,7 @@ const authSlice = createSlice({
     },
     changeRegisterData(
       state,
-      action: PayloadAction<Partial<UserRegisterData>>,
+      action: PayloadAction<Partial<UserRegisterData>>
     ) {
       state.register = { ...state.register, ...action.payload };
     },
@@ -79,7 +79,7 @@ const authSlice = createSlice({
     },
   },
   extraReducers: ({ addCase }) => {
-    addCase(loginUser.pending, (state, action) => {
+    addCase(loginUser.pending, (state) => {
       state.isLoading = true;
     });
     addCase(loginUser.fulfilled, (state, { payload }) => {
@@ -88,7 +88,7 @@ const authSlice = createSlice({
 
       if (payload && typeof payload !== "string") {
         state.authStatus = AuthStatus.AUTHENTICATED;
-        state.auth = payload;
+        state.auth = payload.data;
 
         state.register = initialRegisterData;
         state.login = initialLoginData;

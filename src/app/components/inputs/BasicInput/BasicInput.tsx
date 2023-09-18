@@ -26,6 +26,7 @@ const BasicInput: React.FC<BasicInputProps> = ({
       <label className="text-lg text-gray-500 pb-2">{label}</label>
     )}
     <input
+      title="basic-input"
       type={inputType}
       onChange={onChange}
       value={value}

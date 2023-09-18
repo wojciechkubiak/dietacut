@@ -1,4 +1,5 @@
 import { Activity, BodyType, Gender, Proportions } from "@/models/User";
+import { ApiResponse } from "./ApiResponse";
 
 export enum AuthStatus {
   CHECKING = "checking",
@@ -35,6 +36,8 @@ export interface UserRegisterData extends UserLoginData {
 }
 
 export interface IAuthService {
-  loginUser: (userLoginData: UserLoginData) => Promise<TokenData>;
-  registerUser: (userRegisterData: UserRegisterData) => Promise<TokenData>;
+  loginUser: (userLoginData: UserLoginData) => Promise<ApiResponse<TokenData>>;
+  registerUser: (
+    userRegisterData: UserRegisterData
+  ) => Promise<ApiResponse<TokenData>>;
 }

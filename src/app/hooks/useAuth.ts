@@ -13,7 +13,13 @@ interface UseAuth {
 const useAuth = (): UseAuth => {
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const authStatus = useAppSelector((state) => state.data.authStatus);
+  const { auth, authStatus } = useAppSelector((state) => state.data);
+
+  const storeAuth = ({ token, refreshToken }: TokenData) => {
+    console.log(token, refreshToken);
+    Cookies.set("token", token);
+    Cookies.set("refreshToken", refreshToken);
+  };
 
   const userLogOut = () => {
     Cookies.remove("token");
@@ -22,14 +28,23 @@ const useAuth = (): UseAuth => {
   };
 
   useEffect(() => {
+    const { token, refreshToken, expirationTime } = auth;
+
+    if (token && refreshToken) {
+      storeAuth({ token, refreshToken, expirationTime: expirationTime });
+    }
+  }, [auth]);
+
+  useEffect(() => {
     const token = Cookies.get("token");
     const refreshToken = Cookies.get("refreshToken");
-    const isAuthData = token && refreshToken;
+    const isAuthData = !!token && !!refreshToken;
 
     const isNonAuthenticated =
       !token && !refreshToken && authStatus === AuthStatus.NOT_AUTHENTICATED;
     const isLoading = authStatus === AuthStatus.CHECKING;
 
+    console.log(token, refreshToken);
     if (isNonAuthenticated) {
       router.push("/login");
     } else if (isLoading) {
@@ -39,7 +54,7 @@ const useAuth = (): UseAuth => {
         dispatch(changeAuthData(AuthStatus.NOT_AUTHENTICATED));
       }
     }
-  }, [authStatus]);
+  }, [authStatus, dispatch, router]);
 
   return { authStatus, userLogOut };
 };

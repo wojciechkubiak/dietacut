@@ -27,7 +27,7 @@ const Login: FC = () => {
 
   useEffect(() => {
     if (authStatus === AuthStatus.AUTHENTICATED) router.push("/");
-  }, [authStatus]);
+  }, [authStatus, router]);
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
