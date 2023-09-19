@@ -13,7 +13,6 @@ interface InitialState {
   auth: TokenData;
   login: UserLoginData;
   register: UserRegisterData;
-  error: string;
   isLoading: boolean;
 }
 
@@ -21,6 +20,7 @@ const initialAuthData = {
   token: "",
   refreshToken: "",
   expirationTime: 0,
+  error: "",
 };
 
 const initialLoginData = {
@@ -52,7 +52,6 @@ const initialState: InitialState = {
   auth: initialAuthData,
   login: initialLoginData,
   register: initialRegisterData,
-  error: "",
   isLoading: false,
 };
 
@@ -83,24 +82,20 @@ const authSlice = createSlice({
       state.isLoading = true;
     });
     addCase(loginUser.fulfilled, (state, { payload }) => {
+      state.authStatus = payload.token
+        ? AuthStatus.AUTHENTICATED
+        : AuthStatus.NOT_AUTHENTICATED;
+
+      state.auth = payload;
+
+      state.login = initialLoginData;
+      state.register = initialRegisterData;
       state.isLoading = false;
-      state.error = "";
-
-      if (payload && typeof payload !== "string") {
-        state.authStatus = AuthStatus.AUTHENTICATED;
-        state.auth = payload.data;
-
-        state.register = initialRegisterData;
-        state.login = initialLoginData;
-      } else if (payload === "string") {
-        state.authStatus = AuthStatus.NOT_AUTHENTICATED;
-        state.error = payload;
-      }
     });
-    addCase(loginUser.rejected, (state, result) => {
+    addCase(loginUser.rejected, (state, { error }) => {
       state.isLoading = false;
-      if (result.error.message) {
-        state.error = result.error.message;
+      if (error.message) {
+        state.auth.error = error.message;
       }
     });
   },

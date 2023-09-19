@@ -7,19 +7,19 @@ export enum InputType {
 }
 
 interface BasicInputProps {
+  name: string;
   value: string;
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  name: string;
   inputType: InputType;
   label?: string;
 }
 
 const BasicInput: React.FC<BasicInputProps> = ({
-  value,
   name,
+  value,
   onChange,
-  label,
   inputType,
+  label,
 }) => (
   <>
     {Boolean(label?.length) && (
@@ -32,6 +32,7 @@ const BasicInput: React.FC<BasicInputProps> = ({
       value={value}
       name={name}
       className="bg-gray-200 px-5 py-2 text-xl border-b-2 text-gray-800 focus:outline-none focus:border-b-emerald-400"
+      autoComplete="on"
       required
     />
   </>

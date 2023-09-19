@@ -2,10 +2,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { AppThunkApiConfig } from "../store";
 import { TokenData, UserLoginData, UserRegisterData } from "@/models/Auth";
-import { ApiResponse } from "@/models/ApiResponse";
 
 export const loginUser = createAsyncThunk<
-  ApiResponse<TokenData>,
+  TokenData,
   UserLoginData,
   AppThunkApiConfig
 >("authLoginUser", async ({ email, password }, { extra }) =>
@@ -13,7 +12,7 @@ export const loginUser = createAsyncThunk<
 );
 
 export const registerUser = createAsyncThunk<
-  ApiResponse<TokenData>,
+  TokenData,
   UserRegisterData,
   AppThunkApiConfig
 >("authLoginUser", async (userRegisterData, { extra }) =>

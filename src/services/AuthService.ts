@@ -8,28 +8,19 @@ import {
   UserRegisterData,
 } from "@/models/Auth";
 import axios from "axios";
-import { ApiResponse } from "@/models/ApiResponse";
 
 export class AuthService implements IAuthService {
-  async loginUser(
-    userLoginData: UserLoginData
-  ): Promise<ApiResponse<TokenData>> {
+  async loginUser(userLoginData: UserLoginData): Promise<TokenData> {
     return axios
       .post("/api/auth/login", userLoginData)
-      .then((response) => response)
+      .then((response) => response.data)
       .catch((error) => error);
   }
 
-  async registerUser(
-    userRegisterData: UserRegisterData
-  ): Promise<ApiResponse<TokenData>> {
+  async registerUser(userRegisterData: UserRegisterData): Promise<TokenData> {
     return axios
       .post("/api/auth/register", userRegisterData)
-      .then(function (response) {
-        return response;
-      })
-      .catch(function (error) {
-        return error;
-      });
+      .then((response) => response.data)
+      .catch((error) => error);
   }
 }
