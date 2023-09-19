@@ -31,7 +31,7 @@ const useAuth = (): UseAuth => {
     const { token, refreshToken, expirationTime } = auth;
 
     if (token && refreshToken) {
-      storeAuth({ token, refreshToken, expirationTime: expirationTime });
+      storeAuth({ token, refreshToken, expirationTime });
     }
   }, [auth]);
 

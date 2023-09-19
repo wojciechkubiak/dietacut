@@ -8,10 +8,10 @@ export enum AuthStatus {
 }
 
 export interface ErrorData {
-  error: string;
+  error?: string;
 }
 
-export interface TokenData {
+export interface TokenData extends ErrorData {
   token: string;
   refreshToken: string;
   expirationTime: number;
