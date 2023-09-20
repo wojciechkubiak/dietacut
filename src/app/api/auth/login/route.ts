@@ -1,5 +1,6 @@
-import { ErrorData, TokenData, UserLoginData } from "@/models/Auth";
 import { NextResponse } from "next/server";
+
+import { TokenData, UserLoginData } from "@/models/Auth";
 
 const DEFAULT_RESPONSE: TokenData = {
   error: "",

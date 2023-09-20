@@ -1,9 +1,10 @@
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAppDispatch, useAppSelector } from "@/store/store";
-import { useEffect, useState } from "react";
-import { AuthStatus, TokenData } from "@/models/Auth";
 import Cookies from "js-cookie";
+
+import { AuthStatus, TokenData } from "@/models/Auth";
 import { changeAuthData, logOut } from "@/store/Auth/slice";
+import { useAppDispatch, useAppSelector } from "@/store/store";
 
 interface UseAuth {
   authStatus: AuthStatus;
