@@ -16,12 +16,4 @@
   }
 }
 
-body {
-  background: rgb(63, 251, 113);
-  background: radial-gradient(
-    circle,
-    rgba(63, 251, 113, 1) 0%,
-    rgba(70, 214, 252, 1) 100%
-  );
-  background-attachment: fixed;
-}
+

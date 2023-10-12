@@ -6,6 +6,8 @@ import { useAppDispatch, useAppSelector } from "@/store/store";
 import { registerUser } from "@/store/Auth/actions";
 import { changeRegisterData } from "@/store/Auth/slice";
 import BasicInput, { InputType } from "@/app/components/inputs/BasicInput";
+import FormHeader from "@/app/components/headers/FormHeader";
+import FormSubHeader from "@/app/components/headers/FormSubHeader";
 
 const Form: FC = () => {
   const dispatch = useAppDispatch();
@@ -73,6 +75,10 @@ const Form: FC = () => {
           name="passwordCopy"
         />
       </div>
+      <div className="pt-16">
+        <FormSubHeader text="Formularz" />
+      </div>
+
       <button
         type="submit"
         className={`border-4 h-32 w-32 border-emerald-300 rounded-full shadow-2xl hover:scale-110 duration-200 flex items-center justify-center`}

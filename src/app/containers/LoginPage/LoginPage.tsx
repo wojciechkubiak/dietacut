@@ -13,6 +13,7 @@ import AnimatedOpacityWrapper from "@/app/components/wrappers/AnimatedOpacityWra
 import DefaultWrapper from "@/app/components/wrappers/DefaultWrapper";
 import BasicInput, { InputType } from "@/app/components/inputs/BasicInput";
 import AppHeader from "@/app/components/headers/AppHeader";
+import BackgroundWrapper from "@/app/components/wrappers/BackgroundWrapper";
 
 const LoginPage: FC = () => {
   const { authStatus } = useAuth();
@@ -41,89 +42,93 @@ const LoginPage: FC = () => {
 
   return (
     <main>
-      {!isLoginPage && (
-        <div className="flex min-h-screen flex-col items-center justify-center">
-          <div className="bg-white rounded-full shadow-xl">
-            <ColorRing
-              visible={true}
-              height="178"
-              width="178"
-              ariaLabel="blocks-loading"
-              wrapperStyle={{}}
-              wrapperClass="blocks-wrapper"
-              colors={["#d1fae5", "#a7f3d0", "#6ee7b7", "#34d399", "#10b981"]}
-            />
+      <BackgroundWrapper
+        externalClassName={isLoginPage ? "bg-emerald-400" : "bg-white"}
+      >
+        {!isLoginPage && (
+          <div className="bg-emerald-600 flex min-h-screen flex-col items-center justify-center">
+            <div className="bg-white rounded-full shadow-xl">
+              <ColorRing
+                visible={true}
+                height="178"
+                width="178"
+                ariaLabel="blocks-loading"
+                wrapperStyle={{}}
+                wrapperClass="blocks-wrapper"
+                colors={["#d1fae5", "#a7f3d0", "#6ee7b7", "#34d399", "#10b981"]}
+              />
+            </div>
           </div>
-        </div>
-      )}
-      {isLoginPage && (
-        <>
-          <AppHeader />
-          <AnimatedOpacityWrapper>
-            <DefaultWrapper externalClassName="pt-12 px-12 pb-6 mt-12">
-              <FormHeader headerText="Zaloguj">
-                <p className="text-md text-gray-600 text-center mt-2 mb-12">
-                  Nie masz konta?{" "}
-                  <span
-                    onClick={navigateRegister}
-                    className="text-emerald-400 cursor-pointer"
-                  >
-                    Stwórz!
-                  </span>
-                </p>
-              </FormHeader>
-              <form
-                onSubmit={onSubmit}
-                className="flex flex-col justify-center items-center my-10 space-y-8"
-              >
-                <div className="flex flex-col justify-center w-full px-16">
-                  <BasicInput
-                    value={email}
-                    onChange={onChange}
-                    inputType={InputType.EMAIL}
-                    label="Email"
-                    name="email"
-                  />
-                </div>
-                <div className="flex flex-col justify-center w-full px-16">
-                  <BasicInput
-                    value={password}
-                    onChange={onChange}
-                    inputType={InputType.PASSWORD}
-                    label="Hasło"
-                    name="password"
-                  />
-                </div>
-                <button
-                  type="submit"
-                  className={`border-4 h-32 w-32 border-emerald-300 rounded-full shadow-2xl hover:scale-110 duration-200 flex items-center justify-center`}
-                  disabled={isLoading}
+        )}
+        {isLoginPage && (
+          <>
+            <AppHeader />
+            <AnimatedOpacityWrapper>
+              <DefaultWrapper externalClassName="pt-12 px-12 pb-6 mt-12 bg-white min-w-[900px] w-3/5 left-1/2 -translate-x-1/2">
+                <FormHeader headerText="Zaloguj">
+                  <p className="text-md text-gray-600 text-center mt-2 mb-12">
+                    Nie masz konta?{" "}
+                    <span
+                      onClick={navigateRegister}
+                      className="text-emerald-400 cursor-pointer"
+                    >
+                      Stwórz!
+                    </span>
+                  </p>
+                </FormHeader>
+                <form
+                  onSubmit={onSubmit}
+                  className="flex flex-col justify-center items-center my-10 space-y-8"
                 >
-                  {!isLoading ? (
-                    <AiOutlineArrowRight className="text-5xl text-emerald-500" />
-                  ) : (
-                    <ColorRing
-                      visible={true}
-                      height="128"
-                      width="128"
-                      ariaLabel="blocks-loading"
-                      wrapperStyle={{}}
-                      wrapperClass="blocks-wrapper"
-                      colors={[
-                        "#d1fae5",
-                        "#a7f3d0",
-                        "#6ee7b7",
-                        "#34d399",
-                        "#10b981",
-                      ]}
+                  <div className="flex flex-col justify-center w-full px-16">
+                    <BasicInput
+                      value={email}
+                      onChange={onChange}
+                      inputType={InputType.EMAIL}
+                      label="Email"
+                      name="email"
                     />
-                  )}
-                </button>
-              </form>
-            </DefaultWrapper>
-          </AnimatedOpacityWrapper>
-        </>
-      )}
+                  </div>
+                  <div className="flex flex-col justify-center w-full px-16">
+                    <BasicInput
+                      value={password}
+                      onChange={onChange}
+                      inputType={InputType.PASSWORD}
+                      label="Hasło"
+                      name="password"
+                    />
+                  </div>
+                  <button
+                    type="submit"
+                    className={`border-4 h-32 w-32 border-emerald-300 rounded-full shadow-2xl hover:scale-110 duration-200 flex items-center justify-center`}
+                    disabled={isLoading}
+                  >
+                    {!isLoading ? (
+                      <AiOutlineArrowRight className="text-5xl text-emerald-500" />
+                    ) : (
+                      <ColorRing
+                        visible={true}
+                        height="128"
+                        width="128"
+                        ariaLabel="blocks-loading"
+                        wrapperStyle={{}}
+                        wrapperClass="blocks-wrapper"
+                        colors={[
+                          "#d1fae5",
+                          "#a7f3d0",
+                          "#6ee7b7",
+                          "#34d399",
+                          "#10b981",
+                        ]}
+                      />
+                    )}
+                  </button>
+                </form>
+              </DefaultWrapper>
+            </AnimatedOpacityWrapper>
+          </>
+        )}
+      </BackgroundWrapper>
     </main>
   );
 };

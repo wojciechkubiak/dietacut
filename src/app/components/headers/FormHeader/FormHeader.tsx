@@ -14,7 +14,7 @@ const FormHeader: FC<PropsWithChildren<FormHeaderProps>> = ({
   <>
     {!!onBackButtonClick && (
       <button title="form-header-btn" type="button" onClick={onBackButtonClick}>
-        <AiOutlineArrowLeft className="text-3xl text-emerald-700" />
+        <AiOutlineArrowLeft className="text-3xl text-gray-700" />
       </button>
     )}
     <h1 className="font-bold text-7xl text-gray-700 text-center">

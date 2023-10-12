@@ -8,6 +8,7 @@ import DefaultWrapper from "@/app/components/wrappers/DefaultWrapper";
 import FormHeader from "@/app/components/headers/FormHeader";
 import AppHeader from "@/app/components/headers/AppHeader";
 import Form from "@/app/containers/RegisterPage/Form";
+import BackgroundWrapper from "@/app/components/wrappers/BackgroundWrapper";
 
 const RegisterPage: FC = () => {
   const router = useRouter();
@@ -20,22 +21,18 @@ const RegisterPage: FC = () => {
   }, [authStatus, router]);
 
   return (
-    <>
+    <BackgroundWrapper externalClassName="bg-emerald-400">
       <AppHeader />
       <AnimatedOpacityWrapper>
-        <DefaultWrapper externalClassName="pt-12 px-12 pb-6 mt-12">
+        <DefaultWrapper externalClassName="pt-12 px-12 pb-6 mt-12 bg-white min-w-[900px] w-3/5 left-1/2 -translate-x-1/2">
           <FormHeader
             headerText="Rejestracja"
             onBackButtonClick={onBackButtonClick}
-          >
-            <p className="text-md text-gray-600 text-center mt-2 mb-12">
-              Dane można edytować po założeniu konta
-            </p>
-          </FormHeader>
+          ></FormHeader>
           <Form />
         </DefaultWrapper>
       </AnimatedOpacityWrapper>
-    </>
+    </BackgroundWrapper>
   );
 };
 
