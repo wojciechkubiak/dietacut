@@ -1,13 +1,8 @@
 import { NextResponse } from "next/server";
 
 import { TokenData, UserLoginData } from "@/models/Auth";
-
-const DEFAULT_RESPONSE: TokenData = {
-  error: "",
-  token: "",
-  refreshToken: "",
-  expirationTime: 0,
-};
+import errorResponse from "@/mocks/loading-error.json";
+import successResponse from "@/mocks/loading-success.json";
 
 export const POST = async (
   request: Request
@@ -18,16 +13,7 @@ export const POST = async (
     (value) => !Boolean(value)
   );
 
-  if (isDataMissing)
-    return NextResponse.json({
-      ...DEFAULT_RESPONSE,
-      error: "Missing required data",
-    });
+  if (isDataMissing) return NextResponse.json(errorResponse);
 
-  return NextResponse.json({
-    ...DEFAULT_RESPONSE,
-    token: "test-token",
-    refreshToken: "test-refresh-token",
-    expirationTime: 3600,
-  });
+  return NextResponse.json(successResponse);
 };

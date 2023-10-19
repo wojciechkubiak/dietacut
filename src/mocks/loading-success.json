@@ -1,0 +1,6 @@
+{
+  "token": "test-token",
+  "refreshToken": "test-refresh-token",
+  "expirationTime": 3600,
+  "error": ""
+}
