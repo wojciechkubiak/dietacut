@@ -1,12 +1,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginUser } from "@/store/Auth/actions";
-import {
-  AuthStatus,
-  TokenData,
-  UserLoginData,
-  UserRegisterData,
-} from "@/models/Auth";
-import { Activity, BodyType, Gender } from "@/models/User";
+import { AuthStatus, TokenData } from "@/models/Auth";
+import { Activity, Gender } from "@/models/User";
+import { UserLoginData } from "@/models/Login";
+import { UserRegisterData } from "@/models/Register";
 
 interface InitialState {
   authStatus: AuthStatus;
@@ -28,17 +25,13 @@ const initialLoginData = {
   password: "",
 };
 
-const initialRegisterData = {
+const initialRegisterData: UserRegisterData = {
   email: "",
   password: "",
   name: "",
   gender: Gender.FEMALE,
-  weight: 85,
-  targetWeight: 79,
-  reducedKcal: 500,
-  height: 175,
-  bodyType: BodyType.ECTOMORPH,
-  activity: Activity.MEDIUM,
+  reducedKcal: 0,
+  activityLevel: Activity.MEDIUM,
   proportions: {
     fat: 20,
     carbs: 50,

@@ -1,28 +1,24 @@
 import React, { ChangeEvent } from "react";
 
-export enum InputType {
-  TEXT = "text",
-  EMAIL = "email",
-  PASSWORD = "password",
-}
-
-interface BasicInputProps {
+interface NumberInputProps {
   name: string;
-  value?: string;
+  value?: number;
+  min?: number;
+  max?: number;
   label?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  inputType?: InputType;
   isFullWidth?: boolean;
   isDisabled?: boolean;
   extraClassNames?: string;
 }
 
-const BasicInput: React.FC<BasicInputProps> = ({
+const NumberInput: React.FC<NumberInputProps> = ({
   name,
   value,
+  min,
+  max,
   label,
   onChange,
-  inputType = InputType.TEXT,
   isFullWidth = true,
   isDisabled = false,
   extraClassNames = "",
@@ -32,11 +28,13 @@ const BasicInput: React.FC<BasicInputProps> = ({
       <label className="text-lg text-gray-500 pb-2">{label}</label>
     )}
     <input
-      title="basic-input"
-      type={inputType}
+      title="number-input"
+      type="number"
       onChange={onChange}
       value={value}
       name={name}
+      min={min}
+      max={max}
       className={`${extraClassNames} ${
         isFullWidth ? "w-full" : ""
       } bg-gray-200 px-5 py-2 text-xl border-b-2 text-gray-800 focus:outline-none focus:border-b-emerald-400`}
@@ -47,4 +45,4 @@ const BasicInput: React.FC<BasicInputProps> = ({
   </>
 );
 
-export default BasicInput;
+export default NumberInput;

@@ -1,6 +1,6 @@
 export enum Gender {
-  MALE = "m",
-  FEMALE = "f",
+  MALE = "Male",
+  FEMALE = "Female",
 }
 
 export enum Activity {
@@ -9,12 +9,6 @@ export enum Activity {
   ADVANCED = "advanced",
   HIGH = "high",
   PROFESSIONAL = "professional",
-}
-
-export enum BodyType {
-  ECTOMORPH = "ectomorph",
-  MESOMORPH = "mesomorph",
-  ENDOMORPH = "endomorph",
 }
 
 export interface Proportions {

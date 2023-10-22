@@ -1,13 +1,28 @@
-import { ChangeEvent, FC, FormEvent, useState } from "react";
+import {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { ColorRing } from "react-loader-spinner";
 import { AiOutlinePlus } from "react-icons/ai";
-
+import ReactSlider from "react-slider";
+import { FaFemale, FaMale } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { registerUser } from "@/store/Auth/actions";
 import { changeRegisterData } from "@/store/Auth/slice";
 import BasicInput, { InputType } from "@/app/components/inputs/BasicInput";
-import FormHeader from "@/app/components/headers/FormHeader";
 import FormSubHeader from "@/app/components/headers/FormSubHeader";
+import FormRecord from "./FormRecord/FormRecord";
+import { formatDate, getCalculatedCaloriesIntake } from "./utils";
+
+import DateInput from "@/app/components/inputs/DateInput";
+import NumberInput from "@/app/components/inputs/NumberInput";
+import { Activity, Gender } from "@/models/User";
+import Radio from "@/app/components/inputs/Radio";
+import { CaloricDemandCalculationData } from "@/models/Register";
 
 const Form: FC = () => {
   const dispatch = useAppDispatch();
@@ -18,12 +33,11 @@ const Form: FC = () => {
       password,
       name,
       gender,
-      weight,
+      initialWeight,
       targetWeight,
       reducedKcal,
       height,
-      bodyType,
-      activity,
+      activityLevel,
       proportions,
       proportions: { fat, proteins, carbs },
       birthday,
@@ -31,6 +45,7 @@ const Form: FC = () => {
     isLoading,
   } = useAppSelector((state) => state.data);
   const [passwordCopy, setPasswordCopy] = useState("");
+  const [caloriesIntake, setCaloriesIntake] = useState<number | undefined>();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -40,8 +55,39 @@ const Form: FC = () => {
   const onChange = (e: ChangeEvent<HTMLInputElement>) =>
     dispatch(changeRegisterData({ [e.target.name]: e.target.value }));
 
+  const onChangeGender = (value: Gender) => {
+    dispatch(changeRegisterData({ gender: value }));
+  };
+
+  const onChangeActivityLevel = (value: Activity) => {
+    dispatch(changeRegisterData({ activityLevel: value }));
+  };
+
+  const onBirthdayChange = (value: string) => {
+    console.log(value);
+    const formattedDate = formatDate(value);
+
+    dispatch(changeRegisterData({ birthday: formattedDate }));
+  };
+
   const onChangePasswordCopy = (e: ChangeEvent<HTMLInputElement>) =>
     setPasswordCopy(e.target.value);
+
+  const caloricDemandCalculationData: CaloricDemandCalculationData = useMemo(
+    () => ({
+      birthday,
+      gender,
+      height,
+      initialWeight,
+      activityLevel,
+    }),
+    [birthday, gender, height, initialWeight, activityLevel]
+  );
+
+  useEffect(() => {
+    const intake = getCalculatedCaloriesIntake(caloricDemandCalculationData);
+    setCaloriesIntake(intake);
+  }, [caloricDemandCalculationData]);
 
   return (
     <form
@@ -52,7 +98,7 @@ const Form: FC = () => {
         <BasicInput
           value={email}
           onChange={onChange}
-          inputType={InputType.PASSWORD}
+          inputType={InputType.EMAIL}
           label="Email"
           name="email"
         />
@@ -78,6 +124,122 @@ const Form: FC = () => {
       <div className="pt-16">
         <FormSubHeader text="Formularz" />
       </div>
+
+      <FormRecord
+        header="Imię"
+        description="W ten sposób będziemy się do Ciebie zwracać."
+      >
+        <BasicInput
+          value={name}
+          onChange={onChange}
+          inputType={InputType.TEXT}
+          name="name"
+        />
+      </FormRecord>
+
+      <FormRecord
+        header="Data urodzenia"
+        description="Na podstawie tej informacji możemy nie tylko wyliczyć dokładniejsze
+        zapotrzebowanie, jak również możemy sprawdzić czy jesteś osobą dorosłą.
+        W przypadku osób młodocianych zalecany jest dietetyk."
+      >
+        <DateInput
+          extraClassNames="mt-4"
+          onChange={(e) => {
+            const valueAsDate = e.target.valueAsDate?.toISOString();
+            if (valueAsDate) onBirthdayChange(valueAsDate);
+          }}
+          name="birthday"
+          isFullWidth
+        />
+      </FormRecord>
+
+      <FormRecord
+        header="Płeć"
+        description="Wybierz swoją biologiczną płeć. Pozwoli to na wyliczenie Twego zapotrzebowania."
+      >
+        <Radio
+          name="gender"
+          options={[Gender.FEMALE, Gender.MALE]}
+          value={gender}
+          onChange={onChangeGender}
+        />
+      </FormRecord>
+
+      <FormRecord
+        header="Wzrost"
+        description="Podaj realne dane (nikt poza Tobą ich nie zobaczy), dzięki czemu będziemy w stanie wyliczyć Twoje zapotrzebowanie z najlepszą możliwą dokładnością"
+      >
+        <NumberInput
+          value={height}
+          min={65}
+          max={245}
+          onChange={onChange}
+          name="height"
+        />
+      </FormRecord>
+
+      <FormRecord
+        header="Waga początkowa"
+        description="Tak samo jak w przypadku wzrostu, jest to informacja niezbędna do dokładnego wyliczenia zapotrzebowania."
+      >
+        <NumberInput
+          value={initialWeight}
+          min={25}
+          max={500}
+          onChange={onChange}
+          name="initialWeight"
+        />
+      </FormRecord>
+
+      <FormRecord
+        header="Waga docelowa"
+        description="Ta informacja pozwoli na wizualizowanie Twego progresu."
+      >
+        <NumberInput
+          value={targetWeight}
+          min={30}
+          max={500}
+          onChange={onChange}
+          name="targetWeight"
+        />
+      </FormRecord>
+
+      <FormRecord
+        header="Poziom aktywności"
+        description="Dodamy/odejmiemy kalorie na podstawie Twej aktywności."
+      >
+        <Radio
+          name="activityLevel"
+          options={[
+            Activity.LOW,
+            Activity.MEDIUM,
+            Activity.HIGH,
+            Activity.ADVANCED,
+            Activity.PROFESSIONAL,
+          ]}
+          value={activityLevel}
+          onChange={onChangeActivityLevel}
+        />
+      </FormRecord>
+
+      <FormRecord
+        header="Wyliczone zapotrzebowanie kaloryczne (kcal)"
+        description="Dodamy/odejmiemy kalorie na podstawie Twej aktywności."
+      >
+        <NumberInput
+          value={caloriesIntake}
+          onChange={(e) => setCaloriesIntake(+e.target.value)}
+          name="caloriesIntake"
+        />
+      </FormRecord>
+
+      <FormRecord
+        header="Proporcje makroelementów (%)"
+        description="Suma musi wynosić 100%."
+      >
+        <p>miejsce na slider/input</p>
+      </FormRecord>
 
       <button
         type="submit"

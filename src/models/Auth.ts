@@ -1,4 +1,5 @@
-import { Activity, BodyType, Gender, Proportions } from "@/models/User";
+import { UserLoginData } from "./Login";
+import { UserRegisterData } from "./Register";
 
 export enum AuthStatus {
   CHECKING = "checking",
@@ -14,24 +15,6 @@ export interface TokenData extends ErrorData {
   token: string;
   refreshToken: string;
   expirationTime: number;
-}
-
-export interface UserLoginData {
-  email: string;
-  password: string;
-}
-
-export interface UserRegisterData extends UserLoginData {
-  name: string;
-  gender: Gender;
-  weight: number;
-  targetWeight: number;
-  reducedKcal: number;
-  height: number;
-  bodyType: BodyType;
-  proportions: Proportions;
-  activity: Activity;
-  birthday: string;
 }
 
 export interface IAuthService {

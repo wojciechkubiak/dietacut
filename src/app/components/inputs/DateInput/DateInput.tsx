@@ -1,28 +1,18 @@
 import React, { ChangeEvent } from "react";
 
-export enum InputType {
-  TEXT = "text",
-  EMAIL = "email",
-  PASSWORD = "password",
-}
-
-interface BasicInputProps {
+interface DateInputProps {
   name: string;
-  value?: string;
   label?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  inputType?: InputType;
   isFullWidth?: boolean;
   isDisabled?: boolean;
   extraClassNames?: string;
 }
 
-const BasicInput: React.FC<BasicInputProps> = ({
+const DateInput: React.FC<DateInputProps> = ({
   name,
-  value,
   label,
   onChange,
-  inputType = InputType.TEXT,
   isFullWidth = true,
   isDisabled = false,
   extraClassNames = "",
@@ -32,10 +22,9 @@ const BasicInput: React.FC<BasicInputProps> = ({
       <label className="text-lg text-gray-500 pb-2">{label}</label>
     )}
     <input
-      title="basic-input"
-      type={inputType}
+      title="date-input"
+      type="date"
       onChange={onChange}
-      value={value}
       name={name}
       className={`${extraClassNames} ${
         isFullWidth ? "w-full" : ""
@@ -47,4 +36,4 @@ const BasicInput: React.FC<BasicInputProps> = ({
   </>
 );
 
-export default BasicInput;
+export default DateInput;

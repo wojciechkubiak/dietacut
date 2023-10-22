@@ -9,9 +9,7 @@ const AnimatedOpacityWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div
-      className={`${
-        isAnimated ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-      } duration-1000`}
+      className={`${isAnimated ? "opacity-100" : "opacity-0"} duration-1000`}
     >
       {children}
     </div>
