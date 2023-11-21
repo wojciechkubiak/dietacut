@@ -4,25 +4,31 @@ import {
   FormEvent,
   useEffect,
   useMemo,
+  useCallback,
   useState,
 } from "react";
 import { ColorRing } from "react-loader-spinner";
-import { AiOutlinePlus } from "react-icons/ai";
-import ReactSlider from "react-slider";
-import { FaFemale, FaMale } from "react-icons/fa";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 import { registerUser } from "@/store/Auth/actions";
 import { changeRegisterData } from "@/store/Auth/slice";
 import BasicInput, { InputType } from "@/app/components/inputs/BasicInput";
 import FormSubHeader from "@/app/components/headers/FormSubHeader";
 import FormRecord from "./FormRecord/FormRecord";
-import { formatDate, getCalculatedCaloriesIntake } from "./utils";
-
+import {
+  formatDate,
+  getCalculatedCaloriesIntake,
+  getCalculatedProportions,
+} from "./utils";
+import { AiOutlineCheck } from "react-icons/ai";
 import DateInput from "@/app/components/inputs/DateInput";
 import NumberInput from "@/app/components/inputs/NumberInput";
 import { Activity, Gender } from "@/models/User";
-import Radio from "@/app/components/inputs/Radio";
 import { CaloricDemandCalculationData } from "@/models/Register";
+import ActivityLevel from "./ActivityLevel";
+import GenderType from "./GenderType";
+
+import "rc-slider/assets/index.css";
+import CustomSlider from "@/app/components/common/CustomSlider";
 
 const Form: FC = () => {
   const dispatch = useAppDispatch();
@@ -38,13 +44,17 @@ const Form: FC = () => {
       reducedKcal,
       height,
       activityLevel,
-      proportions,
-      proportions: { fat, proteins, carbs },
+      proportions: {
+        carbs: { percentage: carbsPercentage, grams: carbsGrams },
+        fat: { percentage: fatPercentage, grams: fatGrams },
+        proteins: { percentage: proteinsPercentage, grams: proteinsGrams },
+      },
       birthday,
     },
     isLoading,
   } = useAppSelector((state) => state.data);
   const [passwordCopy, setPasswordCopy] = useState("");
+  const [isCustomCaloriesIntake, setIsCustomCaloriesIntake] = useState(false);
   const [caloriesIntake, setCaloriesIntake] = useState<number | undefined>();
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -63,8 +73,11 @@ const Form: FC = () => {
     dispatch(changeRegisterData({ activityLevel: value }));
   };
 
+  const onChangeReducedKcal = (value: number) => {
+    dispatch(changeRegisterData({ reducedKcal: value }));
+  };
+
   const onBirthdayChange = (value: string) => {
-    console.log(value);
     const formattedDate = formatDate(value);
 
     dispatch(changeRegisterData({ birthday: formattedDate }));
@@ -73,6 +86,45 @@ const Form: FC = () => {
   const onChangePasswordCopy = (e: ChangeEvent<HTMLInputElement>) =>
     setPasswordCopy(e.target.value);
 
+  const onChangeProportions = useCallback(
+    (value: number[]) => {
+      if (!caloriesIntake) return;
+
+      const [start, end] = value;
+
+      const carbsPercentage = start;
+      const fatPercentage = end - carbsPercentage;
+      const proteinsPercentage = 100 - (carbsPercentage + fatPercentage);
+
+      const { carbsGrams, fatGrams, proteinsGrams } = getCalculatedProportions(
+        caloriesIntake,
+        carbsPercentage,
+        fatPercentage,
+        proteinsPercentage
+      );
+
+      dispatch(
+        changeRegisterData({
+          proportions: {
+            carbs: {
+              grams: carbsGrams,
+              percentage: carbsPercentage,
+            },
+            fat: {
+              grams: fatGrams,
+              percentage: fatPercentage,
+            },
+            proteins: {
+              grams: proteinsGrams,
+              percentage: proteinsPercentage,
+            },
+          },
+        })
+      );
+    },
+    [caloriesIntake, dispatch]
+  );
+
   const caloricDemandCalculationData: CaloricDemandCalculationData = useMemo(
     () => ({
       birthday,
@@ -80,14 +132,21 @@ const Form: FC = () => {
       height,
       initialWeight,
       activityLevel,
+      reducedKcal,
     }),
-    [birthday, gender, height, initialWeight, activityLevel]
+    [birthday, gender, height, initialWeight, activityLevel, reducedKcal]
   );
 
   useEffect(() => {
     const intake = getCalculatedCaloriesIntake(caloricDemandCalculationData);
     setCaloriesIntake(intake);
-  }, [caloricDemandCalculationData]);
+  }, [isCustomCaloriesIntake, caloricDemandCalculationData]);
+
+  useEffect(() => {
+    if (!!caloriesIntake) {
+      onChangeProportions([carbsPercentage, carbsPercentage + fatPercentage]);
+    }
+  }, [caloriesIntake, carbsPercentage, fatPercentage, onChangeProportions]);
 
   return (
     <form
@@ -158,12 +217,7 @@ const Form: FC = () => {
         header="Płeć"
         description="Wybierz swoją biologiczną płeć. Pozwoli to na wyliczenie Twego zapotrzebowania."
       >
-        <Radio
-          name="gender"
-          options={[Gender.FEMALE, Gender.MALE]}
-          value={gender}
-          onChange={onChangeGender}
-        />
+        <GenderType currentValue={gender} onChange={onChangeGender} />
       </FormRecord>
 
       <FormRecord
@@ -209,57 +263,116 @@ const Form: FC = () => {
         header="Poziom aktywności"
         description="Dodamy/odejmiemy kalorie na podstawie Twej aktywności."
       >
-        <Radio
-          name="activityLevel"
-          options={[
-            Activity.LOW,
-            Activity.MEDIUM,
-            Activity.HIGH,
-            Activity.ADVANCED,
-            Activity.PROFESSIONAL,
-          ]}
-          value={activityLevel}
+        <ActivityLevel
+          currentValue={activityLevel}
           onChange={onChangeActivityLevel}
         />
       </FormRecord>
+      {!!caloriesIntake ? (
+        <>
+          <FormRecord
+            header="Wyliczone zapotrzebowanie kaloryczne (kcal)"
+            description="Dodamy/odejmiemy kalorie na podstawie Twego wyboru."
+            onCheckboxChange={() => {
+              setIsCustomCaloriesIntake(!isCustomCaloriesIntake);
+            }}
+            isChecked={isCustomCaloriesIntake}
+          >
+            {isCustomCaloriesIntake ? (
+              <NumberInput
+                value={caloriesIntake}
+                onChange={(e) => setCaloriesIntake(+e.target.value)}
+                name="caloriesIntake"
+              />
+            ) : (
+              <>
+                <div className="relative left-1/2 my-8 -translate-x-1/2 flex justify-center items-center rounded-full bg-orange-300 shadow-lg w-52 h-52">
+                  <div className="w-44 h-44 bg-white rounded-full flex flex-col justify-center items-center shadow-md">
+                    <h1 className="text-4xl text-gray-600">
+                      {caloriesIntake || "B/D"}
+                    </h1>
+                    <p className="text-sm text-gray-400">
+                      {reducedKcal / 1000} kg / week
+                    </p>
+                  </div>
+                </div>
+                <div className="relative mb-8 w-1/2 left-1/2 -translate-x-1/2">
+                  <CustomSlider
+                    min={-1000}
+                    max={1000}
+                    value={reducedKcal}
+                    step={100}
+                    onChange={(value) => {
+                      if (!Array.isArray(value)) {
+                        onChangeReducedKcal(value);
+                      }
+                    }}
+                  />
+                </div>
+              </>
+            )}
+          </FormRecord>
 
-      <FormRecord
-        header="Wyliczone zapotrzebowanie kaloryczne (kcal)"
-        description="Dodamy/odejmiemy kalorie na podstawie Twej aktywności."
-      >
-        <NumberInput
-          value={caloriesIntake}
-          onChange={(e) => setCaloriesIntake(+e.target.value)}
-          name="caloriesIntake"
+          <FormRecord header="Proporcje makroelementów (%)">
+            <div className="flex space-x-2 my-8">
+              <div>
+                <NumberInput name="carbs" value={carbsPercentage} isDisabled />
+                <p className="text-xs text-zinc-400">
+                  Węglowodany ({carbsGrams}g)
+                </p>
+              </div>
+              <div>
+                <NumberInput name="fat" value={fatPercentage} isDisabled />
+                <p className="text-xs text-zinc-400">Tłuszcz ({fatGrams}g)</p>
+              </div>
+              <div>
+                <NumberInput
+                  name="proteins"
+                  value={proteinsPercentage}
+                  isDisabled
+                />
+                <p className="text-xs text-zinc-400">
+                  Białko ({proteinsGrams}g)
+                </p>
+              </div>
+            </div>
+            <div className="relative mb-8 w-1/2 left-1/2 -translate-x-1/2">
+              <CustomSlider
+                min={0}
+                max={100}
+                value={[carbsPercentage, carbsPercentage + fatPercentage]}
+                step={1}
+                onChange={(value) => {
+                  if (Array.isArray(value)) {
+                    onChangeProportions(value);
+                  }
+                }}
+                isRange
+              />
+            </div>
+          </FormRecord>
+        </>
+      ) : null}
+
+      {!isLoading ? (
+        <button
+          className="w-72 h-16 flex justify-between items-center px-16 shadow-xl text-xl rounded-lg bg-white hover:text-gray-700  border-2 border-orange-100 hover:border-orange-200 text-gray-600"
+          type="submit"
+        >
+          <AiOutlineCheck />
+          Zatwierdź
+        </button>
+      ) : (
+        <ColorRing
+          visible={true}
+          height="128"
+          width="128"
+          ariaLabel="blocks-loading"
+          wrapperStyle={{}}
+          wrapperClass="blocks-wrapper"
+          colors={["#d1fae5", "#a7f3d0", "#6ee7b7", "#34d399", "#10b981"]}
         />
-      </FormRecord>
-
-      <FormRecord
-        header="Proporcje makroelementów (%)"
-        description="Suma musi wynosić 100%."
-      >
-        <p>miejsce na slider/input</p>
-      </FormRecord>
-
-      <button
-        type="submit"
-        className={`border-4 h-32 w-32 border-emerald-300 rounded-full shadow-2xl hover:scale-110 duration-200 flex items-center justify-center`}
-        disabled={isLoading}
-      >
-        {!isLoading ? (
-          <AiOutlinePlus className="text-5xl text-emerald-500" />
-        ) : (
-          <ColorRing
-            visible={true}
-            height="128"
-            width="128"
-            ariaLabel="blocks-loading"
-            wrapperStyle={{}}
-            wrapperClass="blocks-wrapper"
-            colors={["#d1fae5", "#a7f3d0", "#6ee7b7", "#34d399", "#10b981"]}
-          />
-        )}
-      </button>
+      )}
     </form>
   );
 };

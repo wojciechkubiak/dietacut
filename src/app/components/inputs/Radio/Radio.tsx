@@ -12,7 +12,6 @@ interface RadioProps {
 }
 
 const Radio: React.FC<RadioProps> = ({
-  name,
   value,
   options,
   label,
@@ -20,16 +19,14 @@ const Radio: React.FC<RadioProps> = ({
   isDisabled = false,
 }) => (
   <>
-    {Boolean(label?.length) && (
-      <label className="text-lg text-gray-500 pb-2">{label}</label>
-    )}
+    {!!label && <label className="text-lg text-gray-500 pb-2">{label}</label>}
     <div className="flex w-full">
       {options.map((option) => (
         <div
           key={uuid()}
-          className={`flex-1 border border-white cursor-pointer text-center py-4  ${
-            option === value ? "bg-emerald-500" : "bg-zinc-200"
-          }`}
+          className={`flex-1 border border-white rounded cursor-pointer text-center py-4  ${
+            option === value ? "bg-orange-300" : "bg-zinc-200"
+          } ${isDisabled ? "pointer-events-none" : ""}`}
           onClick={() => {
             if (onChange) onChange(option);
           }}

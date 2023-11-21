@@ -1,5 +1,5 @@
-import { Activity } from "./../../../../models/User";
-import { CaloricDemandCalculationData } from "@/models/Register";
+import { Activity } from "@/models/User";
+import { CaloricDemandCalculationData } from "@/models/RegisterCalculation";
 import { Gender } from "@/models/User";
 import { differenceInYears } from "date-fns";
 
@@ -69,5 +69,20 @@ export const getCalculatedCaloriesIntake = (
       6.8 * differenceInYears(new Date(), new Date(data.birthday));
   }
 
-  return Math.ceil(calories * activityMultipliers[data.activityLevel]);
+  return Math.ceil(
+    calories * activityMultipliers[data.activityLevel] + data.reducedKcal
+  );
+};
+
+export const getCalculatedProportions = (
+  kcal: number,
+  carbsPercentage: number,
+  fatPercentage: number,
+  proteinsPercentage: number
+) => {
+  const carbsGrams = Math.round((kcal * (carbsPercentage / 100)) / 4);
+  const fatGrams = Math.round((kcal * (fatPercentage / 100)) / 9);
+  const proteinsGrams = Math.round((kcal * (proteinsPercentage / 100)) / 4);
+
+  return { carbsGrams, fatGrams, proteinsGrams };
 };

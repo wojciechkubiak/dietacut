@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
 
-import { TokenData } from "@/models/Auth";
-import errorResponse from "@/mocks/loading-error.json";
-import successResponse from "@/mocks/loading-success.json";
-import { UserLoginData } from "@/models/Login";
+import { Token } from "@/models/Token";
+import { LoginFormData } from "@/models/Login";
 
-export const POST = async (
-  request: Request
-): Promise<NextResponse<TokenData>> => {
-  const loginData: UserLoginData = await request.json();
+import errorResponse from "@/mocks/login/error.json";
+import successResponse from "@/mocks/login/success.json";
+
+export const POST = async (request: Request): Promise<NextResponse<Token>> => {
+  const loginData: LoginFormData = await request.json();
 
   const isDataMissing = Object.values(loginData).some(
     (value) => !Boolean(value)

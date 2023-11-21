@@ -21,10 +21,10 @@ const RegisterPage: FC = () => {
   }, [authStatus, router]);
 
   return (
-    <BackgroundWrapper externalClassName="bg-emerald-400">
+    <BackgroundWrapper externalClassName="bg-indigo-300">
       <AppHeader />
       <AnimatedOpacityWrapper>
-        <DefaultWrapper externalClassName="pt-12 px-12 pb-6 mt-12 bg-white min-w-[900px] w-3/5 left-1/2 -translate-x-1/2">
+        <DefaultWrapper externalClassName="pt-12 px-8 pb-6 mt-12 bg-white min-w-[900px] w-2/5 left-1/2 -translate-x-1/2">
           <FormHeader
             headerText="Rejestracja"
             onBackButtonClick={onBackButtonClick}

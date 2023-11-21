@@ -1,7 +1,7 @@
 import { Activity, Gender, Proportions } from "@/models/User";
-import { UserLoginData } from "./Login";
+import { LoginFormData } from "./Login";
 
-export interface UserRegisterData extends UserLoginData {
+export interface RegisterFormData extends LoginFormData {
   name: string;
   birthday: string;
   gender: Gender;
@@ -9,12 +9,6 @@ export interface UserRegisterData extends UserLoginData {
   initialWeight?: number;
   targetWeight?: number;
   activityLevel: Activity;
-
   reducedKcal: number;
   proportions: Proportions;
 }
-
-export type CaloricDemandCalculationData = Pick<
-  UserRegisterData,
-  "birthday" | "gender" | "height" | "initialWeight" | "activityLevel"
->;

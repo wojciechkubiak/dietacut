@@ -1,6 +1,12 @@
 import React, { PropsWithChildren, useEffect, useState } from "react";
 
-const AnimatedOpacityWrapper: React.FC<PropsWithChildren> = ({ children }) => {
+interface AnimatedOpacityWrapperProps {
+  duration?: number;
+}
+
+const AnimatedOpacityWrapper: React.FC<
+  PropsWithChildren<AnimatedOpacityWrapperProps>
+> = ({ children, duration = 1000 }) => {
   const [isAnimated, setIsAnimated] = useState(false);
 
   useEffect(() => {
@@ -9,7 +15,9 @@ const AnimatedOpacityWrapper: React.FC<PropsWithChildren> = ({ children }) => {
 
   return (
     <div
-      className={`${isAnimated ? "opacity-100" : "opacity-0"} duration-1000`}
+      className={`${
+        isAnimated ? "opacity-100" : "opacity-0"
+      } duration-${duration}`}
     >
       {children}
     </div>

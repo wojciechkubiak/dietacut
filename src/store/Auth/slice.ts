@@ -1,15 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { loginUser } from "@/store/Auth/actions";
-import { AuthStatus, TokenData } from "@/models/Auth";
+import { AuthStatus } from "@/models/Auth";
+import { Token } from "@/models/Token";
 import { Activity, Gender } from "@/models/User";
-import { UserLoginData } from "@/models/Login";
-import { UserRegisterData } from "@/models/Register";
+import { LoginFormData } from "@/models/Login";
+import { RegisterFormData } from "@/models/Register";
 
 interface InitialState {
   authStatus: AuthStatus;
-  auth: TokenData;
-  login: UserLoginData;
-  register: UserRegisterData;
+  auth: Token;
+  login: LoginFormData;
+  register: RegisterFormData;
   isLoading: boolean;
 }
 
@@ -25,7 +26,7 @@ const initialLoginData = {
   password: "",
 };
 
-const initialRegisterData: UserRegisterData = {
+const initialRegisterFormData: RegisterFormData = {
   email: "",
   password: "",
   name: "",
@@ -33,9 +34,18 @@ const initialRegisterData: UserRegisterData = {
   reducedKcal: 0,
   activityLevel: Activity.MEDIUM,
   proportions: {
-    fat: 20,
-    carbs: 50,
-    proteins: 30,
+    fat: {
+      grams: 0,
+      percentage: 20,
+    },
+    carbs: {
+      grams: 0,
+      percentage: 50,
+    },
+    proteins: {
+      grams: 0,
+      percentage: 30,
+    },
   },
   birthday: new Date().toISOString(),
 };
@@ -44,7 +54,7 @@ const initialState: InitialState = {
   authStatus: AuthStatus.CHECKING,
   auth: initialAuthData,
   login: initialLoginData,
-  register: initialRegisterData,
+  register: initialRegisterFormData,
   isLoading: false,
 };
 
@@ -55,17 +65,17 @@ const authSlice = createSlice({
     changeAuthData(state, action: PayloadAction<AuthStatus>) {
       state.authStatus = action.payload;
     },
-    changeLoginData(state, action: PayloadAction<Partial<UserLoginData>>) {
+    changeLoginData(state, action: PayloadAction<Partial<LoginFormData>>) {
       state.login = { ...state.login, ...action.payload };
     },
     changeRegisterData(
       state,
-      action: PayloadAction<Partial<UserRegisterData>>
+      action: PayloadAction<Partial<RegisterFormData>>
     ) {
       state.register = { ...state.register, ...action.payload };
     },
     logOut(state) {
-      state.register = initialRegisterData;
+      state.register = initialRegisterFormData;
       state.login = initialLoginData;
       state.authStatus = AuthStatus.NOT_AUTHENTICATED;
     },
@@ -82,7 +92,7 @@ const authSlice = createSlice({
       state.auth = payload;
 
       state.login = initialLoginData;
-      state.register = initialRegisterData;
+      state.register = initialRegisterFormData;
       state.isLoading = false;
     });
     addCase(loginUser.rejected, (state, { error }) => {

@@ -12,7 +12,16 @@ export enum Activity {
 }
 
 export interface Proportions {
-  fat: number;
-  carbs: number;
-  proteins: number;
+  fat: {
+    grams: number;
+    percentage: number;
+  };
+  carbs: {
+    grams: number;
+    percentage: number;
+  };
+  proteins: {
+    grams: number;
+    percentage: number;
+  };
 }

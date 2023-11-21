@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 
-import { AuthStatus, TokenData } from "@/models/Auth";
+import { AuthStatus } from "@/models/Auth";
+import { Token } from "@/models/Token";
 import { changeAuthData, logOut } from "@/store/Auth/slice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 
@@ -16,7 +17,7 @@ const useAuth = (): UseAuth => {
   const router = useRouter();
   const { auth, authStatus } = useAppSelector((state) => state.data);
 
-  const storeAuth = ({ token, refreshToken }: TokenData) => {
+  const storeAuth = ({ token, refreshToken }: Token) => {
     Cookies.set("token", token);
     Cookies.set("refreshToken", refreshToken);
   };

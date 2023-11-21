@@ -28,7 +28,7 @@ const DateInput: React.FC<DateInputProps> = ({
       name={name}
       className={`${extraClassNames} ${
         isFullWidth ? "w-full" : ""
-      } bg-gray-200 px-5 py-2 text-xl border-b-2 text-gray-800 focus:outline-none focus:border-b-emerald-400`}
+      } bg-gray-200 px-5 py-2 text-xl border-b-2 text-gray-800 focus:outline-none focus:border-b-orange-400`}
       autoComplete="on"
       disabled={isDisabled}
       required

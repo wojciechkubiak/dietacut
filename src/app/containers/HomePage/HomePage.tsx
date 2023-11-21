@@ -27,7 +27,7 @@ const HomePage: FC = () => {
   return (
     <main>
       {!isHomePage && (
-        <div className="bg-emerald-600 flex min-h-screen flex-col items-center justify-center">
+        <div className="bg-emerald-200 flex min-h-screen flex-col items-center justify-center">
           <div className="bg-white rounded-full shadow-xl">
             <ColorRing
               visible={true}

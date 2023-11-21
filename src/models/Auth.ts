@@ -1,5 +1,6 @@
-import { UserLoginData } from "./Login";
-import { UserRegisterData } from "./Register";
+import { LoginFormData } from "./Login";
+import { RegisterFormData } from "./Register";
+import { Token } from "./Token";
 
 export enum AuthStatus {
   CHECKING = "checking",
@@ -7,17 +8,7 @@ export enum AuthStatus {
   AUTHENTICATED = "authenticated",
 }
 
-export interface ErrorData {
-  error?: string;
-}
-
-export interface TokenData extends ErrorData {
-  token: string;
-  refreshToken: string;
-  expirationTime: number;
-}
-
 export interface IAuthService {
-  loginUser: (userLoginData: UserLoginData) => Promise<TokenData>;
-  registerUser: (userRegisterData: UserRegisterData) => Promise<TokenData>;
+  loginUser: (loginFormData: LoginFormData) => Promise<Token>;
+  registerUser: (registerFormData: RegisterFormData) => Promise<Token>;
 }
