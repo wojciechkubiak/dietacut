@@ -9,14 +9,14 @@ export const loginUser = createAsyncThunk<
   Token,
   LoginFormData,
   AppThunkApiConfig
->("authLoginUser", async ({ email, password }, { extra }) =>
-  extra.authService.loginUser({ email, password })
+>("authLoginUser", async (loginFormData, { extra }) =>
+  extra.authService.loginUser(loginFormData)
 );
 
 export const registerUser = createAsyncThunk<
   Token,
   RegisterFormData,
   AppThunkApiConfig
->("authLoginUser", async (userRegisterData, { extra }) =>
-  extra.authService.registerUser(userRegisterData)
+>("authRegisterUser", async (registerFormData, { extra }) =>
+  extra.authService.registerUser(registerFormData)
 );

@@ -1,8 +1,7 @@
 "use client";
-import { FC } from "react";
 
 import RegisterPage from "@/app/containers/RegisterPage";
 
-const Register: FC = () => <RegisterPage />;
+const Register: React.FC = () => <RegisterPage />;
 
 export default Register;

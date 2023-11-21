@@ -25,6 +25,7 @@ const useAuth = (): UseAuth => {
   const userLogOut = () => {
     Cookies.remove("token");
     Cookies.remove("refreshToken");
+
     dispatch(logOut());
   };
 

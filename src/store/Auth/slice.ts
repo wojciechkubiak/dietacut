@@ -21,7 +21,7 @@ const initialAuthData = {
   error: "",
 };
 
-const initialLoginData = {
+const initialLoginFormData = {
   email: "",
   password: "",
 };
@@ -53,7 +53,7 @@ const initialRegisterFormData: RegisterFormData = {
 const initialState: InitialState = {
   authStatus: AuthStatus.CHECKING,
   auth: initialAuthData,
-  login: initialLoginData,
+  login: initialLoginFormData,
   register: initialRegisterFormData,
   isLoading: false,
 };
@@ -76,7 +76,7 @@ const authSlice = createSlice({
     },
     logOut(state) {
       state.register = initialRegisterFormData;
-      state.login = initialLoginData;
+      state.login = initialLoginFormData;
       state.authStatus = AuthStatus.NOT_AUTHENTICATED;
     },
   },
@@ -91,7 +91,7 @@ const authSlice = createSlice({
 
       state.auth = payload;
 
-      state.login = initialLoginData;
+      state.login = initialLoginFormData;
       state.register = initialRegisterFormData;
       state.isLoading = false;
     });
