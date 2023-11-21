@@ -4,9 +4,10 @@ import { loginUser } from "@/store/Auth/actions";
 import { changeLoginData } from "@/store/Auth/slice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 
-import BasicInput, { InputType } from "@/app/components/inputs/BasicInput";
 import LoginButton from "./LoginButton";
 import Loader from "./Loader";
+import { InputType } from "@/app/components/inputs/BasicInput";
+import Input from "./Input";
 
 const Form: React.FC = () => {
   const {
@@ -28,24 +29,20 @@ const Form: React.FC = () => {
       onSubmit={onSubmit}
       className="flex flex-col justify-center items-center my-10 space-y-8"
     >
-      <div className="flex flex-col justify-center w-full px-16">
-        <BasicInput
-          value={email}
-          onChange={onChange}
-          inputType={InputType.EMAIL}
-          label="Email"
-          name="email"
-        />
-      </div>
-      <div className="flex flex-col justify-center w-full px-16">
-        <BasicInput
-          value={password}
-          onChange={onChange}
-          inputType={InputType.PASSWORD}
-          label="Hasło"
-          name="password"
-        />
-      </div>
+      <Input
+        value={email}
+        label="Email"
+        name="email"
+        onChange={onChange}
+        inputType={InputType.EMAIL}
+      />
+      <Input
+        value={password}
+        onChange={onChange}
+        inputType={InputType.PASSWORD}
+        label="Hasło"
+        name="password"
+      />
       {!isLoading ? <LoginButton /> : <Loader />}
     </form>
   );
