@@ -1,6 +1,6 @@
 import { AiOutlineCheck } from "react-icons/ai";
 
-const LoginButton: React.FC = () => (
+const Submit: React.FC = () => (
   <button
     className="w-72 h-16 flex justify-between items-center px-20 shadow-xl text-xl bg-white border-2 rounded-2xl border-amber-300 hover:border-amber-400 text-zinc-700"
     type="submit"
@@ -10,4 +10,4 @@ const LoginButton: React.FC = () => (
   </button>
 );
 
-export default LoginButton;
+export default Submit;

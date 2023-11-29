@@ -1,13 +1,12 @@
-import { ChangeEvent, FormEvent } from "react";
+import { FormEvent } from "react";
 
 import { loginUser } from "@/store/Auth/actions";
-import { changeLoginData } from "@/store/Auth/slice";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 
-import LoginButton from "./LoginButton";
+import LoginButton from "./Submit";
 import Loader from "./Loader";
-import { InputType } from "@/app/components/inputs/BasicInput";
-import Input from "./Input";
+import Mail from "./Mail";
+import Password from "./Password";
 
 const Form: React.FC = () => {
   const {
@@ -21,28 +20,13 @@ const Form: React.FC = () => {
     dispatch(loginUser({ email, password }));
   };
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) =>
-    dispatch(changeLoginData({ [e.target.name]: e.target.value }));
-
   return (
     <form
       onSubmit={onSubmit}
       className="flex flex-col justify-center items-center my-10 space-y-8"
     >
-      <Input
-        value={email}
-        label="Email"
-        name="email"
-        onChange={onChange}
-        inputType={InputType.EMAIL}
-      />
-      <Input
-        value={password}
-        onChange={onChange}
-        inputType={InputType.PASSWORD}
-        label="Hasło"
-        name="password"
-      />
+      <Mail />
+      <Password />
       {!isLoading ? <LoginButton /> : <Loader />}
     </form>
   );

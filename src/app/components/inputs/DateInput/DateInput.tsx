@@ -2,6 +2,7 @@ import React, { ChangeEvent } from "react";
 
 interface DateInputProps {
   name: string;
+  value: string;
   label?: string;
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   isFullWidth?: boolean;
@@ -13,6 +14,7 @@ const DateInput: React.FC<DateInputProps> = ({
   name,
   label,
   onChange,
+  value,
   isFullWidth = true,
   isDisabled = false,
   extraClassNames = "",
@@ -22,6 +24,7 @@ const DateInput: React.FC<DateInputProps> = ({
       <label className="text-lg text-gray-500 pb-2">{label}</label>
     )}
     <input
+      value={value}
       title="date-input"
       type="date"
       onChange={onChange}
