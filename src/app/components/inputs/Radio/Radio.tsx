@@ -25,7 +25,7 @@ const Radio: React.FC<RadioProps> = ({
         <div
           key={uuid()}
           className={`flex-1 border border-white rounded cursor-pointer text-center py-4  ${
-            option === value ? "bg-orange-300" : "bg-zinc-200"
+            option === value ? "bg-amber-300" : "bg-zinc-200"
           } ${isDisabled ? "pointer-events-none" : ""}`}
           onClick={() => {
             if (onChange) onChange(option);

@@ -23,9 +23,7 @@ const LoginPage: React.FC = () => {
 
   return (
     <main>
-      <BackgroundWrapper
-        externalClassName={isLoginPage ? "bg-indigo-300" : "bg-white"}
-      >
+      <BackgroundWrapper isBackground>
         {!isLoginPage && <Loader />}
         {isLoginPage && (
           <>

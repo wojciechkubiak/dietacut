@@ -35,7 +35,7 @@ const NumberInput: React.FC<NumberInputProps> = ({
       max={max}
       className={`${extraClassNames} ${
         isFullWidth ? "w-full" : ""
-      } bg-gray-200 px-5 py-2 text-xl border-b-2 text-gray-800 focus:outline-none focus:border-b-orange-400`}
+      } bg-gray-200 px-5 py-2 text-xl border-b-2 text-gray-800 focus:outline-none focus:border-b-amber-500`}
       autoComplete="on"
       disabled={isDisabled}
       required

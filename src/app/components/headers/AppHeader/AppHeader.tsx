@@ -2,8 +2,10 @@ import { FC } from "react";
 
 const AppHeader: FC = () => (
   <>
-    <h1 className="font-bold text-5xl text-white pt-8 text-center">DietaCut</h1>
-    <p className="text-center text-sm text-white mt-1">
+    <h1 className="text-ephesis font-bold text-6xl text-amber-300 pt-2 text-start">
+      DietaCut
+    </h1>
+    <p className="text-start text-sm text-amber-200 mt-1">
       Stworzona z FatSecret Platform API
     </p>
   </>

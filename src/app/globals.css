@@ -16,4 +16,12 @@
   }
 }
 
+.text-ephesis {
+  font-family: var(--font-ephesis);
+  font-weight: 400;
+}
 
+* {
+  font-family: var(--font-inter);
+  font-weight: 400;
+}

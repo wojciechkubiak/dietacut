@@ -16,7 +16,7 @@ const GenderType: React.FC<PropsWithChildren<GenderTypeProps>> = ({
       <FaFemale
         className={`w-16 h-16 p-2 ${
           currentValue === Gender.FEMALE
-            ? "text-orange-300 rounded-lg shadow-lg"
+            ? "text-amber-300 rounded-lg shadow-lg"
             : "text-gray-500"
         } hover:cursor-pointer`}
         onClick={() => onChange(Gender.FEMALE)}
@@ -24,7 +24,7 @@ const GenderType: React.FC<PropsWithChildren<GenderTypeProps>> = ({
       <FaMale
         className={`w-16 h-16 p-2 ${
           currentValue === Gender.MALE
-            ? "text-orange-300 rounded-lg shadow-lg"
+            ? "text-amber-300 rounded-lg shadow-lg"
             : "text-gray-500"
         } hover:cursor-pointer`}
         onClick={() => onChange(Gender.MALE)}

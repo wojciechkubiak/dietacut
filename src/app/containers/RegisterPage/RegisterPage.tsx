@@ -21,7 +21,7 @@ const RegisterPage: FC = () => {
   }, [authStatus, router]);
 
   return (
-    <BackgroundWrapper externalClassName="bg-indigo-300">
+    <BackgroundWrapper isBackground>
       <AppHeader />
       <AnimatedOpacityWrapper>
         <DefaultWrapper externalClassName="pt-12 px-8 pb-6 mt-12 bg-white min-w-[900px] w-2/5 left-1/2 -translate-x-1/2">

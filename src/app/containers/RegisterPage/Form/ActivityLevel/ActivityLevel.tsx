@@ -22,7 +22,7 @@ const ActivityLevel: React.FC<PropsWithChildren<ActivityLevelProps>> = ({
       <TbAntennaBars1
         className={`w-16 h-16 ${
           currentValue === Activity.LOW
-            ? "text-orange-300 rounded-lg shadow-lg"
+            ? "text-amber-300 rounded-lg shadow-lg"
             : "text-gray-500"
         } hover:cursor-pointer`}
         onClick={() => onChange(Activity.LOW)}
@@ -30,7 +30,7 @@ const ActivityLevel: React.FC<PropsWithChildren<ActivityLevelProps>> = ({
       <TbAntennaBars2
         className={`w-16 h-16 ${
           currentValue === Activity.MEDIUM
-            ? "text-orange-300 rounded-lg shadow-lg"
+            ? "text-amber-300 rounded-lg shadow-lg"
             : "text-gray-500"
         } hover:cursor-pointer`}
         onClick={() => onChange(Activity.MEDIUM)}
@@ -38,7 +38,7 @@ const ActivityLevel: React.FC<PropsWithChildren<ActivityLevelProps>> = ({
       <TbAntennaBars3
         className={`w-16 h-16 ${
           currentValue === Activity.HIGH
-            ? "text-orange-300 rounded-lg shadow-lg"
+            ? "text-amber-300 rounded-lg shadow-lg"
             : "text-gray-500"
         } hover:cursor-pointer`}
         onClick={() => onChange(Activity.HIGH)}
@@ -46,7 +46,7 @@ const ActivityLevel: React.FC<PropsWithChildren<ActivityLevelProps>> = ({
       <TbAntennaBars4
         className={`w-16 h-16 ${
           currentValue === Activity.ADVANCED
-            ? "text-orange-300 rounded-lg shadow-lg"
+            ? "text-amber-300 rounded-lg shadow-lg"
             : "text-gray-500"
         } hover:cursor-pointer`}
         onClick={() => onChange(Activity.ADVANCED)}
@@ -54,7 +54,7 @@ const ActivityLevel: React.FC<PropsWithChildren<ActivityLevelProps>> = ({
       <TbAntennaBars5
         className={`w-16 h-16 ${
           currentValue === Activity.PROFESSIONAL
-            ? "text-orange-300 rounded-lg shadow-lg"
+            ? "text-amber-300 rounded-lg shadow-lg"
             : "text-gray-500"
         } hover:cursor-pointer`}
         onClick={() => onChange(Activity.PROFESSIONAL)}

@@ -1,16 +1,16 @@
 import { ColorRing } from "react-loader-spinner";
 
 const Loader: React.FC = () => (
-  <div className="bg-indigo-300 flex min-h-screen flex-col items-center justify-center">
+  <div className="flex min-h-screen flex-col items-center justify-center">
     <div className="bg-white rounded-full shadow-xl">
       <ColorRing
         visible={true}
-        height="178"
-        width="178"
+        height="248"
+        width="248"
         ariaLabel="blocks-loading"
         wrapperStyle={{}}
         wrapperClass="blocks-wrapper"
-        colors={["#d1fae5", "#a7f3d0", "#6ee7b7", "#34d399", "#10b981"]}
+        colors={["#ecfccb", "#a3e635", "#84cc16", "#a3e635", "#ecfccb"]}
       />
     </div>
   </div>

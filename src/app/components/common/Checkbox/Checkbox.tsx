@@ -9,10 +9,10 @@ interface CheckboxProps {
 const Checkbox: React.FC<CheckboxProps> = ({ onChange, isChecked }) => {
   return (
     <div
-      className="w-4 h-4 border-2 border-orange-300 flex justify-center items-center"
+      className="w-4 h-4 border rounded-sm border-amber-400 flex justify-center items-center"
       onClick={onChange}
     >
-      {isChecked && <AiOutlineCheck className="w-3 h-3 text-orange-500" />}
+      {isChecked && <AiOutlineCheck className="w-3 h-3 text-amber-400" />}
     </div>
   );
 };

@@ -286,7 +286,7 @@ const Form: FC = () => {
               />
             ) : (
               <>
-                <div className="relative left-1/2 my-8 -translate-x-1/2 flex justify-center items-center rounded-full bg-orange-300 shadow-lg w-52 h-52">
+                <div className="relative left-1/2 my-8 -translate-x-1/2 flex justify-center items-center rounded-full bg-amber-300 shadow-lg w-52 h-52">
                   <div className="w-44 h-44 bg-white rounded-full flex flex-col justify-center items-center shadow-md">
                     <h1 className="text-4xl text-gray-600">
                       {caloriesIntake || "B/D"}
@@ -356,7 +356,7 @@ const Form: FC = () => {
 
       {!isLoading ? (
         <button
-          className="w-72 h-16 flex justify-between items-center px-16 shadow-xl text-xl rounded-lg bg-white hover:text-gray-700  border-2 border-orange-100 hover:border-orange-200 text-gray-600"
+          className="w-72 h-16 flex justify-between items-center px-16 shadow-xl text-xl rounded-lg bg-white hover:text-gray-700  border-2 border-amber-100 hover:border-amber-200 text-gray-600"
           type="submit"
         >
           <AiOutlineCheck />
@@ -370,7 +370,7 @@ const Form: FC = () => {
           ariaLabel="blocks-loading"
           wrapperStyle={{}}
           wrapperClass="blocks-wrapper"
-          colors={["#d1fae5", "#a7f3d0", "#6ee7b7", "#34d399", "#10b981"]}
+          colors={["#ecfccb", "#a3e635", "#84cc16", "#a3e635", "#ecfccb"]}
         />
       )}
     </form>

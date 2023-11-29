@@ -8,11 +8,11 @@ const Header: React.FC = () => {
 
   return (
     <FormHeader headerText="Logowanie">
-      <p className="text-md text-gray-600 text-center mt-2 mb-12">
+      <p className="text-inter text-md text-gray-600 text-center mt-2 mb-12">
         Nie masz konta?{" "}
         <span
           onClick={navigateRegister}
-          className="text-orange-300 cursor-pointer"
+          className="text-amber-400 cursor-pointer"
         >
           Stwórz!
         </span>

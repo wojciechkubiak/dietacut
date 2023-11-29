@@ -17,7 +17,7 @@ const FormHeader: FC<PropsWithChildren<FormHeaderProps>> = ({
         <AiOutlineArrowLeft className="text-3xl text-gray-700" />
       </button>
     )}
-    <h1 className="font-bold text-7xl text-gray-700 text-center">
+    <h1 className="text-ephesis text-8xl text-gray-700 text-center">
       {headerText}
     </h1>
     {children}

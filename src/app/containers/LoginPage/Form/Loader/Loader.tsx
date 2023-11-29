@@ -8,7 +8,7 @@ const LoginButton: React.FC = () => (
     ariaLabel="blocks-loading"
     wrapperStyle={{}}
     wrapperClass="blocks-wrapper"
-    colors={["#d1fae5", "#a7f3d0", "#6ee7b7", "#34d399", "#10b981"]}
+    colors={["#ecfccb", "#a3e635", "#84cc16", "#a3e635", "#ecfccb"]}
   />
 );
 
