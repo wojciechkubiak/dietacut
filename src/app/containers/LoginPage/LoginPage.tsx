@@ -7,7 +7,7 @@ import AnimatedOpacityWrapper from "@/app/components/wrappers/AnimatedOpacityWra
 import DefaultWrapper from "@/app/components/wrappers/DefaultWrapper";
 import AppHeader from "@/app/components/headers/AppHeader";
 import BackgroundWrapper from "@/app/components/wrappers/BackgroundWrapper";
-import Loader from "./Loader";
+import PageLoader from "./PageLoader";
 import Header from "./Header";
 import Form from "./Form";
 
@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
   return (
     <main>
       <BackgroundWrapper isBackground>
-        {!isLoginPage && <Loader />}
+        {!isLoginPage && <PageLoader />}
         {isLoginPage && (
           <>
             <AppHeader />

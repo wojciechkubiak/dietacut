@@ -4,9 +4,9 @@ import { loginUser } from "@/store/Auth/actions";
 import { useAppDispatch, useAppSelector } from "@/store/store";
 
 import LoginButton from "./Submit";
-import Loader from "./Loader";
 import Mail from "./Mail";
 import Password from "./Password";
+import ButtonLoader from "./ButtonLoader";
 
 const Form: React.FC = () => {
   const {
@@ -27,7 +27,7 @@ const Form: React.FC = () => {
     >
       <Mail />
       <Password />
-      {!isLoading ? <LoginButton /> : <Loader />}
+      {!isLoading ? <LoginButton /> : <ButtonLoader />}
     </form>
   );
 };

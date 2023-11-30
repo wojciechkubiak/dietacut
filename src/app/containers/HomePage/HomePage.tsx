@@ -1,43 +1,22 @@
-import { FC, useState } from "react";
-import { ColorRing } from "react-loader-spinner";
-import { CgLogOut } from "react-icons/cg";
-import { BsGenderMale } from "react-icons/bs";
-import { MdOutlineFitnessCenter } from "react-icons/md";
-import { PiNotebookDuotone } from "react-icons/pi";
-import { FiSettings } from "react-icons/fi";
-import { BsGraphDownArrow } from "react-icons/bs";
-import { SlNote } from "react-icons/sl";
-import { AiOutlineSwap } from "react-icons/ai";
+import { FC } from "react";
 
 import { AuthStatus } from "@/models/Auth";
-import DefaultWrapper from "@/app/components/wrappers/DefaultWrapper";
 import useAuth from "@/app/hooks/useAuth";
 import AnimatedOpacityWrapper from "@/app/components/wrappers/AnimatedOpacityWrapper";
-import AppHeader from "@/app/components/headers/AppHeader";
 import MeasuresChart from "./MeasuresChart";
+import Loader from "@/app/components/common/Loader";
 
 const HomePage: FC = () => {
   const { authStatus, userLogOut } = useAuth();
-  const [isBiologicalData, setIsBiologicalData] = useState(false);
-
-  const handleIsBiologicalData = () => setIsBiologicalData(!isBiologicalData);
 
   const isHomePage = authStatus === AuthStatus.AUTHENTICATED;
 
   return (
     <main>
       {!isHomePage && (
-        <div className="bg-emerald-200 flex min-h-screen flex-col items-center justify-center">
+        <div className="bg-white flex min-h-screen flex-col items-center justify-center">
           <div className="bg-white rounded-full shadow-xl">
-            <ColorRing
-              visible={true}
-              height="178"
-              width="178"
-              ariaLabel="blocks-loading"
-              wrapperStyle={{}}
-              wrapperClass="blocks-wrapper"
-              colors={["#ecfccb", "#a3e635", "#84cc16", "#a3e635", "#ecfccb"]}
-            />
+            <Loader size={178} />
           </div>
         </div>
       )}

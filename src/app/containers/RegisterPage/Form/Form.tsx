@@ -10,7 +10,7 @@ import Mail from "./Mail";
 import Password from "./Password";
 import Height from "./Height";
 import Submit from "./Submit";
-import Loader from "./Loader";
+import ButtonLoader from "./ButtonLoader";
 import InitialWeight from "./InitialWeight";
 import CaloriesIntake from "./CaloriesIntake";
 import TargetWeight from "./TargetWeight/TargetWeight";
@@ -44,7 +44,7 @@ const Form: FC = () => {
       <ActivityLevel />
       <CaloriesIntake />
 
-      {!isLoading ? <Submit /> : <Loader />}
+      {!isLoading ? <Submit /> : <ButtonLoader />}
     </form>
   );
 };

@@ -5,7 +5,6 @@ import { useAppSelector } from "@/store/store";
 import { AuthStatus } from "@/models/Auth";
 import AnimatedOpacityWrapper from "@/app/components/wrappers/AnimatedOpacityWrapper";
 import DefaultWrapper from "@/app/components/wrappers/DefaultWrapper";
-import FormHeader from "@/app/components/headers/FormHeader";
 import AppHeader from "@/app/components/headers/AppHeader";
 import Form from "@/app/containers/RegisterPage/Form";
 import BackgroundWrapper from "@/app/components/wrappers/BackgroundWrapper";
